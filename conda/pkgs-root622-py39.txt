@@ -1,0 +1,9 @@
+python=3.9
+root=6.22.8
+cxx-compiler
+poetry
+git
+voms
+cmake
+nlohmann_json
+curl

@@ -1,0 +1,12 @@
+version: "0.2"
+ignorePaths:
+  - pyproject.toml
+dictionaryDefinitions:
+  - name: custom-dictionary
+    path: ./.cspell/custom-dictionary.txt
+    addWords: true
+    scope: []
+dictionaries:
+  - custom-dictionary
+ignoreWords: []
+import: []

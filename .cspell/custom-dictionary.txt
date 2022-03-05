@@ -1,0 +1,9 @@
+# Custom Dictionary Words
+conda
+dasgoclient
+mrtools
+Multithreading
+pkgs
+prestageing
+reimplementation
+voms

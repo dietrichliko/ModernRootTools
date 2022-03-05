@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "mrtools"
+version = "0.1.0"
+description = "Modern ROOT Tools for CMS Physics Analysis at HEPHY"
+authors = ["Dietrich Liko <Dietrich.Liko@oeaw.ac.at>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+click = "^8.0.1"
+PyYAML = "^5.4.1"
+SQLAlchemy = "^1.3.24"
+jsonschema = "^4.4.0"
+datasize = "^1.0.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^22.1.0"
+flake8 = "^4.0.1"
+flake8-bugbear = "^22.1.11"
+flake8-docstrings = "^1.6.0"
+mypy = "^0.931"
+reorder-python-imports = "^2.7.1"
+
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
