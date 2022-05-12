@@ -1,3 +1,13 @@
 {
-
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.linting.flake8Enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.testing.pytestEnabled": true,
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": false,
+            "source.organizeImports.reorder-python-imports": true
+        },
+    }
 }
