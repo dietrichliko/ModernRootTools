@@ -1,6 +1,7 @@
 ---
 name: Met_nanoNtuple_v5
 period: Run2016preVFP
+    attributes:
 samples:
   - name: MET
     type: Data
@@ -17,6 +18,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/MET_Run2016F_HIPM_UL
   - name: WJets
     type: Background
+    attributes:
+      color: 8
     samples:
       - name: WJetsToLNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/WJetsToLNu_HT100to200
@@ -34,6 +37,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/WJetsToLNu_HT2500toInf
   - name: TT
     type: Background
+    attributes:
+      color: kAzure+1
     samples:
       - name: TTLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/TTLep_pow_CP5
@@ -41,6 +46,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/TTSingleLep_pow_CP5
   - name: T
     type: Background
+    attributes:
+      color: kAzure+1
     samples:
       - name: T_tch_pow
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/T_tch_pow
@@ -52,6 +59,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/TBar_tWch_ext
   - name: TTX
     type: Background
+    attributes:
+      color: kAzure-7
     samples:
       - name: TTZ_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/TTZ_LO
@@ -63,6 +72,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/TTWToQQ
   - name: DY
     type: Background
+    attributes:
+      color: kMagenta-6
     samples:
       - name: DYJetsToLL_M50_HT70to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/DYJetsToLL_M50_HT70to100
@@ -82,6 +93,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/DYJetsToLL_M50_HT2500toInf
   - name: DYINV
     type: Background
+    attributes:
+      color: kOrange-3
     samples:
       - name: DYJetsToNuNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/DYJetsToNuNu_HT100to200
@@ -99,6 +112,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v5/Met/DYJetsToNuNu_HT2500toInf
   - name: QCD
     type: Background
+    attributes:
+      color: kMagenta+3
     samples:
       - name: QCD_HT50to100
         samples:
@@ -166,6 +181,7 @@ samples:
 ---
 name: Met_nanoNtuple_v5
 period: Run2016postVFP
+    attributes:
 samples:
   - name: MET
     type: Data
@@ -178,6 +194,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/MET_Run2016H_UL
   - name: WJets
     type: Background
+    attributes:
+      color: 8
     samples:
       - name: WJetsToLNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/WJetsToLNu_HT100to200
@@ -195,6 +213,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/WJetsToLNu_HT2500toInf
   - name: TT
     type: Background
+    attributes:
+      color: kAzure+1
     samples:
       - name: TTLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/TTLep_pow_CP5
@@ -202,6 +222,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/TTSingleLep_pow_CP5
   - name: T
     type: Background
+    attributes:
+      color: kAzure+1
     samples:
       - name: T_tch_pow
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/T_tch_pow
@@ -213,6 +235,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/TBar_tWch_ext
   - name: TTX
     type: Background
+    attributes:
+      color: kAzure-7
     samples:
       - name: TTZ_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/TTZ_LO
@@ -224,6 +248,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/TTWToQQ
   - name: DY
     type: Background
+    attributes:
+      color: kMagenta-6
     samples:
       - name: DYJetsToLL_M50_HT70to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/DYJetsToLL_M50_HT70to100
@@ -243,6 +269,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/DYJetsToLL_M50_HT2500toInf
   - name: DYINV
     type: Background
+    attributes:
+      color: kOrange-3
     samples:
       - name: DYJetsToNuNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/DYJetsToNuNu_HT100to200
@@ -260,6 +288,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v5/Met/DYJetsToNuNu_HT2500toInf
   - name: QCD
     type: Background
+    attributes:
+      color: kMagenta+3
     samples:
       - name: QCD_HT50to100
         samples:
@@ -327,6 +357,7 @@ samples:
 ---
 name: Met_nanoNtuple_v5
 period: Run2017
+    attributes:
 samples:
   - name: MET
     type: Data
@@ -343,6 +374,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/MET_Run2017F_UL
   - name: WJets
     type: Background
+    attributes:
+      color: 8
     samples:
       - name: WJetsToLNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/WJetsToLNu_HT100to200
@@ -360,6 +393,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/WJetsToLNu_HT2500toInf
   - name: TT
     type: Background
+    attributes:
+      color: kAzure+1
     samples:
       - name: TTLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/TTLep_pow_CP5
@@ -367,6 +402,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/TTSingleLep_pow_CP5
   - name: T
     type: Background
+    attributes:
+      color: kAzure+1
     samples:
       - name: T_tch_pow
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/T_tch_pow
@@ -378,6 +415,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/TBar_tWch_ext
   - name: TTX
     type: Background
+    attributes:
+      color: kAzure-7
     samples:
       - name: TTZ_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/TTZ_LO
@@ -387,6 +426,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/TTW_LO
   - name: DY
     type: Background
+    attributes:
+      color: kMagenta-6
     samples:
       - name: DYJetsToLL_M50_HT70to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/DYJetsToLL_M50_HT70to100
@@ -406,6 +447,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/DYJetsToLL_M50_HT2500toInf
   - name: DYINV
     type: Background
+    attributes:
+      color: kOrange-3
     samples:
       - name: DYJetsToNuNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/DYJetsToNuNu_HT100to200
@@ -423,6 +466,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/DYJetsToNuNu_HT2500toInf
   - name: QCD
     type: Background
+    attributes:
+      color: kMagenta+3
     samples:
       - name: QCD_HT50to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v5/Met/QCD_HT50to100
@@ -454,6 +499,7 @@ samples:
 ---
 name: Met_nanoNtuple_v5
 period: Run2018
+    attributes:
 samples:
   - name: MET
     type: Data
@@ -468,6 +514,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/MET_Run2018D_UL
   - name: WJets
     type: Background
+    attributes:
+      color: 8
     samples:
       - name: WJetsToLNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/WJetsToLNu_HT100to200
@@ -485,6 +533,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/WJetsToLNu_HT2500toInf
   - name: TT
     type: Background
+    attributes:
+      color: kAzure+1
     samples:
       - name: TTLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/TTLep_pow_CP5
@@ -492,6 +542,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/TTSingleLep_pow_CP5
   - name: T
     type: Background
+    attributes:
+      color: kAzure+1
     samples:
       - name: T_tch_pow
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/T_tch_pow
@@ -503,6 +555,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/TBar_tWch_ext
   - name: TTX
     type: Background
+    attributes:
+      color: kAzure-7
     samples:
       - name: TTZ_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/TTZ_LO
@@ -512,6 +566,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/TTW_LO
   - name: DY
     type: Background
+    attributes:
+      color: kMagenta-6
     samples:
       - name: DYJetsToLL_M50_HT70to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/DYJetsToLL_M50_HT70to100
@@ -531,6 +587,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/DYJetsToLL_M50_HT2500toInf
   - name: DYINV
     type: Background
+    attributes:
+      color: kOrange-3
     samples:
       - name: DYJetsToNuNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/DYJetsToNuNu_HT100to200
@@ -548,6 +606,8 @@ samples:
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/DYJetsToNuNu_HT2500toInf
   - name: QCD
     type: Background
+    attributes:
+      color: kMagenta+3
     samples:
       - name: QCD_HT50to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v5/Met/QCD_HT50to100

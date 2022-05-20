@@ -43,10 +43,9 @@ from collections.abc import Generator
 from mrtools import configuration
 from mrtools import exceptions
 from mrtools import utilities
-from typing import Any
+from typing import Any, Sequence
 from typing import cast
 from typing import Container
-from typing import Dict
 from typing import Iterator
 from typing import Optional
 from typing import Tuple
@@ -83,7 +82,7 @@ class SampleFile:
     _state: SampleFileState
     _entries: Optional[int]
     _checksum: Optional[int]
-    _attrs: Dict[str, Any]
+    _attrs: dict[str, Any]
     _price: Optional[float]
     _value: Optional[float]
     _ts: Optional[float]
@@ -112,7 +111,7 @@ class SampleFile:
             checksum: Adler32 checksum of file.
             price: The price of a file for staging.
             value: The reduced value of a file due to ageing.
-            tsp: Timestamp of the last update of the value.
+            ts: Timestamp of the last update of the value.
         """
         self._sample = sample
         dirname, name = os.path.split(path)
@@ -296,7 +295,7 @@ class SampleBase(Collection):
     _parent: Optional["SampleBase"]
     _tree_name: str
     _title: str
-    _attrs: Dict[str, Any]
+    _attrs: dict[str, Any]
 
     def __init__(
         self,
@@ -305,7 +304,7 @@ class SampleBase(Collection):
         parent: Optional["SampleGroup"] = None,
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[Dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> None:
         """Initialise the base class.
 
@@ -342,6 +341,11 @@ class SampleBase(Collection):
         return self._name
 
     @property
+    def title(self) -> str:
+        """Nice name of the sample."""
+        return self._title
+
+    @property
     def path(self) -> pathlib.PurePath:
         """Path of the sample."""
         return pathlib.PurePath(str(self))
@@ -368,7 +372,7 @@ class SampleBase(Collection):
         return self._tree_name
 
     @property
-    def attrs(self) -> Dict[str, Any]:
+    def attrs(self) -> dict[str, Any]:
         """User defined attributes."""
         return self._attrs
 
@@ -400,11 +404,23 @@ class SampleBase(Collection):
         """Size of the contained files."""
         return DataSize(sum(f._size for f in iter(self)))
 
+    def chain(self, max: Optional[int] = None) -> Any:
+        """Iterator on url of the contained files."""
+        url_iter: Iterator[str] = (f.url for f in self)
+        if max:
+            url_iter = itertools.islice(url_iter, max)
+
+        chain = ROOT.TChain(self.tree_name)
+        for url in url_iter:
+            chain.Add(url)
+
+        return chain
+
 
 class Sample(SampleBase):
     """Common base class for real samples."""
 
-    _files: Dict[str, Dict[str, SampleFile]]
+    _files: dict[str, dict[str, SampleFile]]
 
     def __init__(
         self,
@@ -413,7 +429,7 @@ class Sample(SampleBase):
         parent: "SampleGroup",
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[Dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> None:
         """Initialise a sample base class.
 
@@ -475,7 +491,7 @@ class SampleFromFS(Sample):
         filter: str = "",
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[Dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> None:
         """Initialise a sample base class.
 
@@ -496,7 +512,7 @@ class SampleFromFS(Sample):
 
     def __repr__(self) -> str:
 
-        parts = [
+        items = [
             f"path={self.path}",
             f"type={self._type.name}",
             f"directory={self._directory}",
@@ -504,15 +520,15 @@ class SampleFromFS(Sample):
             f"#files={len(self)}",
             f"size={self.size:.2a}",
         ]
-        entries = self.entries
-        if entries:
-            parts.append(f"entries={entries}")
-
-        return f"SampleFromFS({', '.join(parts)})"
+        if entries := self.entries:
+            items.append(f"entries={entries}")
+        for key, value in self.attrs.items():
+            items.append(f"{key}={value}")
+        return f"SampleFromFS({', '.join(items)})"
 
     def get_files(self) -> None:
         """List the files in directory and create file structure."""
-        ### HACK
+        # HACK
         dirpath = pathlib.Path(
             "/scratch-cbe/users/dietrich.liko", *self._directory.parts[4:]
         )
@@ -553,7 +569,7 @@ class SampleFromDAS(Sample):
         instance: str = "",
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[Dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> None:
         """Initialise a sample base class.
 
@@ -579,7 +595,7 @@ class SampleFromDAS(Sample):
 
     def __repr__(self) -> str:
 
-        parts = [
+        items = [
             f"path={self.path}",
             f"type={self._type.name}",
             f"dasname={self._dasname}",
@@ -587,10 +603,11 @@ class SampleFromDAS(Sample):
             f"#files={len(self)}",
             f"size={self.size:.2a}",
         ]
-        entries = self.entries
-        if entries:
-            parts.append(f"entries={entries}")
-        return f"SampleFromDAS({', '.join(parts)})"
+        if entries := self.entries:
+            items.append(f"entries={entries}")
+        for key, value in self.attrs.items():
+            items.append(f"{key}={value}")
+        return f"SampleFromDAS({', '.join(items)})"
 
     def get_files(self) -> None:
         """Get the files from DAS and create file structure."""
@@ -618,7 +635,7 @@ class SampleFromDAS(Sample):
 class SampleGroup(SampleBase):
     """Sample group."""
 
-    _children: Dict[str, SampleBase]
+    _children: dict[str, SampleBase]
 
     def __init__(
         self,
@@ -627,7 +644,7 @@ class SampleGroup(SampleBase):
         parent: Optional["SampleGroup"] = None,
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[Dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> None:
         """Initialise a sample base class.
 
@@ -644,17 +661,18 @@ class SampleGroup(SampleBase):
 
     def __repr__(self) -> str:
 
-        parts = [
+        items = [
             f"path={self.path}",
             f"type={self._type.name}",
             f"#samples={len(self._children)}",
             f"#files={len(self)}",
             f"size={self.size:.2a}",
         ]
-        entries = self.entries
-        if entries:
-            parts.append(f"entries={entries}")
-        return f"SampleGroup({', '.join(parts)})"
+        if entries := self.entries:
+            items.append(f"entries={entries}")
+        for key, value in self.attrs.items():
+            items.append(f"{key}={value}")
+        return f"SampleGroup({', '.join(items)})"
 
     @property
     def children(self) -> Iterator[SampleBase]:
@@ -677,11 +695,11 @@ class SampleGroup(SampleBase):
         """Path item contained in sample."""
         return any(item in s for s in self._children.values())
 
-    def append(
+    def load(
         self,
         data: Any,
     ) -> None:
-
+        """Load nested samples."""
         if not isinstance(data, list) or any(
             (not isinstance(item, dict) for item in data)
         ):
@@ -702,7 +720,7 @@ class SampleGroup(SampleBase):
                     item.get("title", name),
                     item.get("attributes", {}),
                 )
-                sample_group.append(item["samples"])
+                sample_group.load(item["samples"])
             elif "dasname" in item:
                 SampleFromDAS(
                     name,
@@ -727,8 +745,8 @@ class SampleGroup(SampleBase):
                 )
 
     @staticmethod
-    def get_type(item: Dict[str, Any], default: SampleType) -> SampleType:
-        """get sample type fro dictionary."""
+    def get_type(item: dict[str, Any], default: SampleType) -> SampleType:
+        """Get sample type fro dictionary."""
         st = item.get("type", default.name)
         try:
             return SampleType[st.upper()]
@@ -761,7 +779,7 @@ def filter_types(sample: SampleBase, types: SampleTypeSpec = None) -> bool:
     """
     if types is None:
         return True
-    elif isinstance(types, SampleType):
-        return sample.type == types
-    else:
+    elif isinstance(types, Sequence):
         return sample.type in types
+    else:
+        return sample.type == types

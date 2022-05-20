@@ -22,29 +22,13 @@ TChain = Any
 class Analysis(abc.ABC):
 
     @abc.abstractmethod
-    def map_sample(
-        sample_name: str, 
-        sample_type: model.SampleType, 
-        sample_attrs: Dict[str, Any],
-        sub_sample: int,
-        df: Any,
-    ) -> Tuple[List[Any], Dict[str,Any]]:
+    def map(sample: model.Sample) -> Any:
         pass
 
     @abc.abstactmethod
-    def reduce_sample(
-        sample_name: str, 
-        sample_type: model.SampleType,
-        histos: Dict[str, List[Any]],
-        stat: Dict[str, Dict[str, Any]]
-    ) -> Tuple[List[Any], Dict[str,Any]]:
+    def reduce(sample: model.Sample, results:list[dd.Future]) -> Any:
         pass
-
-    def terminate       
-
-def map_sample(Analysis: analysis, sample_name: sample_type, sample_attrs, sub_sample, urls) ->
     
-
 class AnalysisProcessor:
     """Distribute Analysis Base Class."""
 

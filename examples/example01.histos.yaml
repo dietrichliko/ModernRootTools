@@ -1,121 +1,363 @@
 ---
-- dataframe: df
-  weight: weight
+- dataframe: df_muon0
+  weight: the_weight
+  data_samples: SingleMuon
   Histo1D:
-    - name: Muon_pt
-      title: "Muon p_{T}"
-      bins: [100, 0., 500.]
-    - name: Muon_phi
-      title: "Muon #phi"
-      bins: [100, -3.14, 3.14]
-    - name: Muon_eta
-      title: "Muon #eta"
-      bins: [100, -3, 3]
     - name: MediumMuon_pt
-      title: "MediumMuon p_{T}"
+      title: "Medium #mu p_{T}"
       bins: [100, 0., 500.]
     - name: MediumMuon_phi
-      title: "MediumMuon #phi"
-      bins: [100, -3.14, 3.14]
+      title: "Medium #mu #phi"
+      bins: [100, -3.14159, 3.14159]
     - name: MediumMuon_eta
-      title: "MediumMuon #eta"
+      title: "Medium #mu #eta"
       bins: [100, -3, 3]
     - name: MediumMuon_pfRelIso03_all
-      title: "MediumMuon pfRelIso03_all"
-      bins: [100, 0., 1.]
+      title: "Medium #mu RelIso03"
+      bins: [100, 0., 0.5]
+      var: Muon_pfRelIso03_all[Muon_mediumId]
+
+    - name: TightMuon_pt
+      title: "Tight #mu p_{T}"
+      bins: [100, 0., 500.]
+    - name: TightMuon_phi
+      title: "Tight #mu #phi"
+      bins: [100, -3.14159, 3.14159]
+    - name: TightMuon_eta
+      title: "Tight #mu #eta"
+      bins: [100, -3, 3]
+    - name: TightMuon_pfRelIso03_all
+      title: "Tight #mu RelIso03"
+      bins: [100, 0., 0.5]
+      var: Muon_pfRelIso03_all[Muon_tightId]
+
     - name: GoodMuon_pt
-      title: "GoodMuon p_{T}"
+      title: "Good #mu p_{T}"
       bins: [100, 0., 500.]
     - name: GoodMuon_phi
-      title: "GoodMuon #phi"
-      bins: [100, -3.14, 3.14]
+      title: "Good #mu #phi"
+      bins: [100, -3.14159, 3.14159]
     - name: GoodMuon_eta
-      title: "GoodMuon #eta"
-      bins: [100, -2, 2]
-    - name: nGoodMuon
-      title: "Number good Muons"
-      bins: [20, -0.5, 19.5]
-
-    - name: Electron_pt
-      title: "Electron p_{T}"
-      bins: [100, 0., 500.]
-    - name: Electron_phi
-      title: "Electron #phi"
-      bins: [100, -3.14, 3.14]
-    - name: Electron_eta
-      title: "Electron #eta"
+      title: "Good #mu #eta"
       bins: [100, -3, 3]
+    - name: GoodMuon_pfRelIso03_all
+      title: "Good #mu RelIso03"
+      bins: [100, 0., 0.5]
+      var: Muon_pfRelIso03_all[GoodMuon]
+    - name: nGoodMuon
+      title: "Number of Good #mu"
+      bins: [ 10, -0.5, 9.5]
+      var: Sum(GoodMuon)
+    - name: nGoodMuon30
+      title: "Number of Good #mu > 30 GeV"
+      bins: [ 10, -0.5, 9.5]
+      var: Sum(GoodMuon_pt > 30.)
+    - name: nGoodMuon50
+      title: "Number of Good #mu > 50 GeV"
+      bins: [ 10, -0.5, 9.5]
+      var: Sum(GoodMuon_pt > 50.)
+
+- dataframe: df_ele0
+  weight: the_weight
+  data_samples: SingleElectron
+  Histo1D:
     - name: MediumElectron_pt
-      title: "MediumElectron p_{T}"
+      title: "Medium e p_{T}"
       bins: [100, 0., 500.]
     - name: MediumElectron_phi
-      title: "MediumElectron #phi"
-      bins: [100, -3.14, 3.14]
+      title: "Medium e #phi"
+      bins: [100, -3.14159, 3.14159]
     - name: MediumElectron_eta
-      title: "MediumElectron #eta"
+      title: "Medium e #eta"
       bins: [100, -3, 3]
     - name: MediumElectron_pfRelIso03_all
-      title: "MediumElectron pfRelIso03_all"
-      bins: [100, -1., 1.]
+      title: "Medium e RelIso03"
+      bins: [100, 0., 0.5]
+      var: Electron_pfRelIso03_all[Electron_cutBased > 2]
+
+    - name: TightElectron_pt
+      title: "Tight e p_{T}"
+      bins: [100, 0., 500.]
+    - name: TightElectron_phi
+      title: "Tight e #phi"
+      bins: [100, -3.14159, 3.14159]
+    - name: TightElectron_eta
+      title: "Tight e #eta"
+      bins: [100, -3, 3]
+    - name: TightElectron_pfRelIso03_all
+      title: "Tight e RelIso03"
+      bins: [100, 0., 0.5]
+      var: Electron_pfRelIso03_all[Electron_cutBased > 3]
+
     - name: GoodElectron_pt
-      title: "GoodElectron p_{T}"
+      title: "Good e p_{T}"
       bins: [100, 0., 500.]
     - name: GoodElectron_phi
-      title: "GoodElectron #phi"
-      bins: [100, -3.14, 3.14]
+      title: "Good e #phi"
+      bins: [100, -3.14159, 3.14159]
     - name: GoodElectron_eta
-      title: "GoodElectron #eta"
-      bins: [100, -2, 2]
+      title: "Good e #eta"
+      bins: [100, -3, 3]
+    - name: GoodElectron_pfRelIso03_all
+      title: "Good e RelIso03"
+      bins: [100, 0., 0.5]
+      var: Electron_pfRelIso03_all[GoodElectron]
     - name: nGoodElectron
-      title: "Number good Electrons"
-      bins: [20, -0.5, 19.5]
+      title: "Number of Good e"
+      bins: [ 10, -0.5, 9.5]
+      var: Sum(GoodElectron)
+    - name: nGoodElectron30
+      title: "Number of Good e > 30 GeV"
+      bins: [ 10, -0.5, 9.5]
+      var: Sum(GoodElectron_pt > 30.)
+    - name: nGoodElectron50
+      title: "Number of Good e > 50 GeV"
+      bins: [ 10, -0.5, 9.5]
+      var: Sum(GoodElectron_pt > 50.)
 
-- dataframe: df_muon
-  weight: weight
-  data_sample: SingleMuon
+- dataframe: df_muon1
+  weight: the_weight
+  data_samples: SingleMuon
   Histo1D:
-    - name: muon_pt1
-      title: "Muon - Lepton p_{T}"
-      bins: [100, 0., 500.]
-      var: MaxGoodMuon_pt
-    - name: muon_LT
-      title: "Muon - Leptonic Transverse Energy"
+    - name: muon1_pt
+      title: "Leading #mu p_{T}"
+      bins: [50, 0., 500.]
+      var: ll_pt
+    - name: muon1_phi
+      title: "leading #mu #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: ll_phi
+    - name: muon1_eta
+      title: "Leading #mu #eta"
+      bins: [50, -3, 3.]
+      var: ll_eta
+    - name: muon1_LT
+      title: "L_{T}"
+      bins: [50, 0., 500.]
+      var: LT
+    - name: muon1_HT
+      title: "H_{T}"
+      bins: [50, 0., 500.]
+      var: HT
+    - name: muon1_MET
+      title: "ME_{T}"
+      bins: [50, 0., 500.]
+      var: met_pt
+    - name: muon1_MET_phi
+      title: "ME_{T} #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: met_phi
+    - name: muon1_W_pt
+      title: "W p_{T}"
+      bins: [0, 0., 500.]
+      var: W_pt
+    - name: muon1_W_mt
+      title: "W m_{T}"
+      bins: [0, 0., 500.]
+      var: W_mt
+
+- dataframe: df_muon2
+  weight: the_weight
+  data_samples: SingleMuon
+  Histo1D:
+    - name: muon2_pt
+      title: "Leading #mu p_{T}"
+      bins: [50, 0., 500.]
+      var: ll_pt
+    - name: muon2_phi
+      title: "leading #mu #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: ll_phi
+    - name: muon2_eta
+      title: "Leading #mu #eta"
+      bins: [50, -3, 3.]
+      var: ll_eta
+    - name: muon2_LT
+      title: "L_{T}"
+      bins: [50, 0., 500.]
+      var: LT
+    - name: muon2_HT
+      title: "H_{T}"
+      bins: [50, 0., 500.]
+      var: HT
+    - name: muon2_MET
+      title: "ME_{T}"
+      bins: [50, 0., 500.]
+      var: met_pt
+    - name: muon2_MET_phi
+      title: "ME_{T} #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: met_phi
+    - name: muon2_W_pt
+      title: "W p_{T}"
+      bins: [0, 0., 500.]
+      var: W_pt
+    - name: muon2_W_mt
+      title: "W m_{T}"
+      bins: [0, 0., 500.]
+      var: W_mt
+
+- dataframe: df_muon3
+  weight: the_weight
+  data_samples: SingleMuon
+  Histo1D:
+    - name: muon3_pt
+      title: "Leading #mu p_{T}"
+      bins: [50, 0., 500.]
+      var: ll_pt
+    - name: muon3_phi
+      title: "leading #mu #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: ll_phi
+    - name: muon3_eta
+      title: "Leading #mu #eta"
+      bins: [50, -3, 3.]
+      var: ll_eta
+    - name: muon3_LT
+      title: "L_{T}"
+      bins: [50, 0., 500.]
+      var: LT
+    - name: muon3_HT
+      title: "H_{T}"
+      bins: [50, 0., 500.]
+      var: HT
+    - name: muon3_MET
+      title: "ME_{T}"
+      bins: [50, 0., 500.]
+      var: met_pt
+    - name: muon3_MET_phi
+      title: "ME_{T} #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: met_phi
+    - name: muon3_W_pt
+      title: "W p_{T}"
+      bins: [0, 0., 500.]
+      var: W_pt
+    - name: muon3_W_mt
+      title: "W m_{T}"
+      bins: [0, 0., 500.]
+      var: W_mt
+
+
+- dataframe: df_ele1
+  weight: the_weight
+  data_samples: SingleElectron
+  Histo1D:
+    - name: ele1_pt
+      title: "Leading e p_{T}"
+      bins: [50, 0., 500.]
+      var: ll_pt
+    - name: ele1_phi
+      title: "Leading e #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: ll_phi
+    - name: ele1_eta
+      title: "Leading e #eta"
+      bins: [50, -3, 3.]
+      var: ll_eta
+    - name: ele1_LT
+      title: "L_{T}"
       bins: [100, 0., 500.]
       var: LT
-    - name: muon_HT
-      title: "Muon - Hadronic Transverse Energy"
+    - name: ele1_HT
+      title: "H_{T}"
       bins: [100, 0., 500.]
       var: HT
-    - name: muon_MET
-      title: "Muon - MissingTransverse Energy"
-      bins: [100, 0., 500.]
+    - name: ele1_MET
+      title: "ME_{T}"
+      bins: [50, 0., 500.]
       var: met_pt
-    - name: muon_MET_phi
-      title: "Muon - Missing Transverse Energy"
-      bins: [100, -3.14, 3.14]
+    - name: ele1_MET_phi
+      title: "ME_{T} #phi"
+      bins: [50, -3.14159, 3.14159]
       var: met_phi
+    - name: ele1_W_pt
+      title: "W p_{T}"
+      bins: [0, 0., 500.]
+      var: W_pt
+    - name: ele1_W_mt
+      title: "W m_{T}"
+      bins: [0, 0., 500.]
+      var: W_mt
 
-- dataframe: df_ele
-  weight: weight
-  data_sample: SingleElectron
+- dataframe: df_ele2
+  weight: the_weight
+  data_samples: SingleElectron
   Histo1D:
-    - name: ele_pt1
-      title: "Electron - Lepton p_{T}"
-      bins: [100, 0., 500.]
-      var: MaxGoodElectron_pt
-    - name: ele_LT
-      title: "Electron - Leptonic Transverse Energy"
+    - name: ele2_pt
+      title: "Leading e p_{T}"
+      bins: [50, 0., 500.]
+      var: ll_pt
+    - name: ele2_phi
+      title: "Leading e #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: ll_phi
+    - name: ele2_eta
+      title: "Leading e #eta"
+      bins: [50, -3, 3.]
+      var: ll_eta
+    - name: ele2_LT
+      title: "L_{T}"
       bins: [100, 0., 500.]
       var: LT
-    - name: ele_HT
-      title: "Electron - Hadronic Transverse Energy"
+    - name: ele2_HT
+      title: "H_{T}"
       bins: [100, 0., 500.]
       var: HT
-    - name: ele_MET
-      title: "Electron - Missing Transverse Energy"
-      bins: [100, 0., 500.]
+    - name: ele2_MET
+      title: "ME_{T}"
+      bins: [50, 0., 500.]
       var: met_pt
-    - name: ele_MET_phi
-      title: "Electron - Missing Transverse Energy"
-      bins: [100, -3.14, 3.14]
+    - name: ele2_MET_phi
+      title: "ME_{T} #phi"
+      bins: [50, -3.14159, 3.14159]
       var: met_phi
+    - name: ele2_W_pt
+      title: "W p_{T}"
+      bins: [0, 0., 500.]
+      var: W_pt
+    - name: ele2_W_mt
+      title: "W m_{T}"
+      bins: [0, 0., 500.]
+      var: W_mt
+
+- dataframe: df_ele3
+  weight: the_weight
+  data_samples: SingleElectron
+  Histo1D:
+    - name: ele3_pt
+      title: "Leading e p_{T}"
+      bins: [50, 0., 500.]
+      var: ll_pt
+    - name: ele3_phi
+      title: "Leading e #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: ll_phi
+    - name: ele3_eta
+      title: "Leading e #eta"
+      bins: [50, -3, 3.]
+      var: ll_eta
+    - name: ele3_LT
+      title: "L_{T}"
+      bins: [100, 0., 500.]
+      var: LT
+    - name: ele3_HT
+      title: "H_{T}"
+      bins: [100, 0., 500.]
+      var: HT
+    - name: ele3_MET
+      title: "ME_{T}"
+      bins: [50, 0., 500.]
+      var: met_pt
+    - name: ele3_MET_phi
+      title: "ME_{T} #phi"
+      bins: [50, -3.14159, 3.14159]
+      var: met_phi
+    - name: ele3_W_pt
+      title: "W p_{T}"
+      bins: [0, 0., 500.]
+      var: W_pt
+    - name: ele3_W_mt
+      title: "W m_{T}"
+      bins: [0, 0., 500.]
+      var: W_mt

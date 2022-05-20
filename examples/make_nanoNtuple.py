@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Write yaml files for sample definition."""
 
 import click
 
@@ -11,6 +12,12 @@ PERIODES = {
     "Run2018": "compstops_UL18v9_nano_",
 }
 
+LUMINOSITY = {
+    "Run2016preVFP": 19.5,
+    "Run2016postVFP": 16.5,
+    "Run2017": 41.48,
+    "Run2018": 59.83,
+}
 MUON_TRIGGER = {
     "Run2016preVFP": ["HLT_Mu50", "HLT_TkMu50"],
     "Run2016postVFP": ["HLT_Mu50", "HLT_TkMu50"],
@@ -127,6 +134,12 @@ SIGNAL_DATASETS = [
     "SMS_T2tt_mStop_500_mLSP_470",
 ]
 
+SIGNAL_TITLE = {
+    "SMS_T2tt_mStop_500_mLSP_420": "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 420",
+    "SMS_T2tt_mStop_500_mLSP_450": "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 450",
+    "SMS_T2tt_mStop_500_mLSP_470": "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 470",
+}
+
 COLOR = {
     "WJets": 8,
     "TT": "kAzure+1",
@@ -150,8 +163,10 @@ def main(skim: str, version: str):
             print("---", file=out)
             print(f"name: {skim}_nanoNtuple_{version}", file=out)
             print(f"period: {period}", file=out)
+            if skim == "Met":
+                print("attributes:", file=out)
+                print(f"  integrated_luminosity: {LUMINOSITY[period]}", file=out)
             print("samples:", file=out)
-
             if skim == "Met":
                 print("  - name: MET", file=out)
                 print("    type: Data", file=out)
@@ -164,8 +179,10 @@ def main(skim: str, version: str):
                     )
             elif skim == "MetLepEnergy":
                 print("  - name: SingleMuon", file=out)
+                print('    title: "Single #mu"', file=out)
                 print("    type: Data", file=out)
                 print("    attributes:", file=out)
+                print(f"      integrated_luminosity: {LUMINOSITY[period]}", file=out)
                 print("      trigger:", file=out)
                 for trigger in MUON_TRIGGER[period]:
                     print(f"        - {trigger}", file=out)
@@ -177,8 +194,10 @@ def main(skim: str, version: str):
                         file=out,
                     )
                 print("  - name: SingleElectron", file=out)
+                print('    title: "Single e"', file=out)
                 print("    type: Data", file=out)
                 print("    attributes:", file=out)
+                print(f"      integrated_luminosity: {LUMINOSITY[period]}", file=out)
                 print("      trigger:", file=out)
                 for trigger in ELECTRON_TRIGGER[period]:
                     print(f"        - {trigger}", file=out)
@@ -191,6 +210,7 @@ def main(skim: str, version: str):
                     )
 
             print("  - name: WJets", file=out)
+            print('    title: "W + Jets"', file=out)
             print("    type: Background", file=out)
             print("    attributes:", file=out)
             print(f"      color: {COLOR['WJets']}", file=out)
@@ -203,6 +223,7 @@ def main(skim: str, version: str):
                 )
 
             print("  - name: TT", file=out)
+            print('    title: "t#bar{t}"', file=out)
             print("    type: Background", file=out)
             print("    attributes:", file=out)
             print(f"      color: {COLOR['TT']}", file=out)
@@ -215,6 +236,7 @@ def main(skim: str, version: str):
                 )
 
             print("  - name: T", file=out)
+            print('    title: "Single t"', file=out)
             print("    type: Background", file=out)
             print("    attributes:", file=out)
             print(f"      color: {COLOR['TT']}", file=out)
@@ -227,6 +249,7 @@ def main(skim: str, version: str):
                 )
 
             print("  - name: TTX", file=out)
+            print('    title: "t#bar{t} #rightarrow X"', file=out)
             print("    type: Background", file=out)
             print("    attributes:", file=out)
             print(f"      color: {COLOR['TTX']}", file=out)
@@ -247,6 +270,7 @@ def main(skim: str, version: str):
                     )
 
             print("  - name: DY", file=out)
+            print('    title: "#gamma/Z^{*}"', file=out)
             print("    type: Background", file=out)
             print("    attributes:", file=out)
             print(f"      color: {COLOR['DY']}", file=out)
@@ -259,6 +283,7 @@ def main(skim: str, version: str):
                 )
 
             print("  - name: DYINV", file=out)
+            print('    title: "#gamma/Z^{*} #rightarrow #nu#bar{#nu}"', file=out)
             print("    type: Background", file=out)
             print("    attributes:", file=out)
             print(f"      color: {COLOR['DYINV']}", file=out)
@@ -271,6 +296,7 @@ def main(skim: str, version: str):
                 )
 
             print("  - name: QCD", file=out)
+            print('    title: "QCD"', file=out)
             print("    type: Background", file=out)
             print("    attributes:", file=out)
             print(f"      color: {COLOR['QCD']}", file=out)
@@ -299,6 +325,7 @@ def main(skim: str, version: str):
 
             for dataset in SIGNAL_DATASETS:
                 print(f"  - name: {dataset}", file=out)
+                print(f'    title: "{SIGNAL_TITLE[dataset]}"', file=out)
                 print("    type: Signal", file=out)
                 print(
                     f"    directory: {PATH}/{period_dir}{version}/{skim}/{dataset}",

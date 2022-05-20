@@ -6,13 +6,12 @@ import logging
 import os
 import pathlib
 import sys
-from collections.abc import Container
 from collections.abc import Generator
 from contextlib import AbstractContextManager
 from mrtools import configuration
 from mrtools import model
 from types import TracebackType
-from typing import Dict
+from typing import List
 from typing import Literal
 from typing import Optional
 from typing import TextIO
@@ -23,7 +22,7 @@ from typing import Union
 if "CMSSW_BASE" in os.environ:
     import yaml  # type: ignore
 else:
-    import ruamel.yaml as yaml
+    import ruamel.yaml as yaml  # type: ignore
 
 log = logging.getLogger(__name__)
 config = configuration.get()
@@ -65,7 +64,7 @@ class SamplesCache(AbstractContextManager):
         self._yaml_load(input)
 
         with futures.ThreadPoolExecutor(max_workers=self._threads) as e:
-            tasks: Dict[futures.Future, model.Sample] = {}
+            tasks: dict[futures.Future, model.Sample] = {}
             for _, samples, _ in model.walk(self._root):
                 tasks |= {e.submit(lambda x: x.get_files(), s): s for s in samples}
 
@@ -78,18 +77,11 @@ class SamplesCache(AbstractContextManager):
                 if len(sample):
                     log.debug("Sample %s has %d files.", sample, len(sample))
                 else:
+                    log.error("Sample %s is empty.", sample)
                     if isinstance(sample, model.SampleFromFS):
-                        log.warning(
-                            "Sample %s is empty. Check directory %s,",
-                            sample,
-                            sample._directory,
-                        )
+                        log.error("Check directory %s.", sample._directory)
                     elif isinstance(sample, model.SampleFromDAS):
-                        log.warning(
-                            "Sample %s is empty. Check DASname %s.",
-                            sample,
-                            sample._dasname,
-                        )
+                        log.error("Check DASname %s.", sample._dasname)
                     else:
                         log.warning("Sample %s is empty.", sample)
 
@@ -101,10 +93,10 @@ class SamplesCache(AbstractContextManager):
         Arguments:
             input: Yaml file.
         """
+        log.info("Loading samples from %s", input)
         yaml_parser = yaml.YAML(typ="safe")
         with open(input, "r") as inp:
-            for i, data in enumerate(yaml_parser.load_all(inp)):
-                log.info("Loading yaml document %d from %s", i, input)
+            for data in yaml_parser.load_all(inp):
 
                 name = data.get("name")
                 if name is None:
@@ -123,8 +115,10 @@ class SamplesCache(AbstractContextManager):
                 if self._root.get(period) is not None:
                     log.error("Period %s already loaded.", period)
 
+                log.info("Loading %s for %s", name, period)
+
                 group = model.SampleGroup(period, model.SampleType.UNKNOWN, self._root)
-                group.append(data.get("samples"))
+                group.load(data.get("samples"))
 
     def list(
         self,
@@ -150,26 +144,28 @@ class SamplesCache(AbstractContextManager):
 
         yield from (s for s in samples if model.filter_types(s, types))
 
-
-    def _filter_name(name: str, pattern: Union[str, List[str]])-> bool:
-
-        if isinstance(pattern, list):
-            return any(( fnmatch.fnmatch(name, p) for p in pattern))
-        else:
-            return fnmatch.fnmatch(name, pattern)
     def find(
         self,
         period: str = "",
-        name: Union[str, List[str]] = "*",
+        pattern: Union[None, str, List[str]] = None,
         types: model.SampleTypeSpec = None,
     ) -> Generator[model.SampleBase, None, None]:
         """Find samples with a specific name and type in a period.
 
         Arguments:
             period: Running period (empty for all periodes)
-            name: Sample name (wildcard supported)
+            pattern: Sample name (wildcard supported)
             types: Sample type (single value or container)
         """
+        def _filter_name(name: str, pattern: Union[None, str, List[str]])-> bool:
+
+            if pattern is None:
+                return True
+            elif isinstance(pattern, list):
+                return any(( fnmatch.fnmatch(name, p) for p in pattern))
+            else:
+                return fnmatch.fnmatch(name, pattern)
+                
         root = self._root.get(period) if period else self._root
         if root is None:
             log.error("Period %s not found", period)
@@ -177,7 +173,7 @@ class SamplesCache(AbstractContextManager):
 
         for _, samples, groups in model.walk(root):
             for s in itertools.chain(samples, groups):
-                if fnmatch.fnmatch(s.name, name) and model.filter_types(s, types):
+                if _filter_name(s.name, pattern) and model.filter_types(s, types):
                     yield s
 
     def print_tree(

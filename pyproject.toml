@@ -17,7 +17,7 @@ distributed = "^2022.5.0"
 dask-jobqueue = "^0.7.3"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.4.3"
+pytest = "^7.1.0"
 black = "^22.3.0"
 flake8 = "^4.0.1"
 flake8-bugbear = "^22.1.11"
@@ -27,6 +27,8 @@ reorder-python-imports = "^2.7.1"
 
 [tool.poetry.scripts]
 example01 = "examples.example01:main"
+ex01_plot01 = "examples.ex01_plot01:main"
+check_weights = "examples.check_weights:main"
 plot01 = "examples.plot01:main"
 printtree = "examples.printtree:main"
 make_nanoNtuple = "examples.make_nanoNtuple:main"

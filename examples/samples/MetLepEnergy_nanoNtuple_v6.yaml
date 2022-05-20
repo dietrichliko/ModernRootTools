@@ -3,8 +3,10 @@ name: MetLepEnergy_nanoNtuple_v6
 period: Run2016preVFP
 samples:
   - name: SingleMuon
+    title: "Single #mu"
     type: Data
     attributes:
+      integrated_luminosity: 19.5
       trigger:
         - HLT_Mu50
         - HLT_TkMu50
@@ -20,8 +22,10 @@ samples:
       - name: Run2016F_HIPM_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/SingleMuon_Run2016F_HIPM_UL
   - name: SingleElectron
+    title: "Single e"
     type: Data
     attributes:
+      integrated_luminosity: 19.5
       trigger:
         - HLT_Ele27_WPTight_Gsf
     samples:
@@ -36,9 +40,10 @@ samples:
       - name: Run2016F_HIPM_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/SingleElectron_Run2016F_HIPM_UL
   - name: WJets
+    title: "W + Jets"
     type: Background
     attributes:
-      fill_color: kRed
+      color: 8
     samples:
       - name: WJetsToLNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/WJetsToLNu_HT100to200
@@ -55,18 +60,20 @@ samples:
       - name: WJetsToLNu_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/WJetsToLNu_HT2500toInf
   - name: TT
+    title: "t#bar{t}"
     type: Background
     attributes:
-      fill_color: kBlue
+      color: kAzure+1
     samples:
       - name: TTLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/TTLep_pow_CP5
       - name: TTSingleLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/TTSingleLep_pow_CP5
   - name: T
+    title: "Single t"
     type: Background
     attributes:
-      fill_color: kBlue
+      color: kAzure+1
     samples:
       - name: T_tch_pow
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/T_tch_pow
@@ -77,9 +84,10 @@ samples:
       - name: TBar_tWch_ext
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/TBar_tWch_ext
   - name: TTX
+    title: "t#bar{t} #rightarrow X"
     type: Background
     attributes:
-      fill_color: kGreen
+      color: kAzure-7
     samples:
       - name: TTZ_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/TTZ_LO
@@ -90,9 +98,10 @@ samples:
       - name: TTWToQQ
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/TTWToQQ
   - name: DY
+    title: "#gamma/Z^{*}"
     type: Background
     attributes:
-      fill_color: kYellow
+      color: kMagenta-6
     samples:
       - name: DYJetsToLL_M50_HT70to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/DYJetsToLL_M50_HT70to100
@@ -111,9 +120,10 @@ samples:
       - name: DYJetsToLL_M50_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/DYJetsToLL_M50_HT2500toInf
   - name: DYINV
+    title: "#gamma/Z^{*} #rightarrow #nu#bar{#nu}"
     type: Background
     attributes:
-      fill_color: kPink
+      color: kOrange-3
     samples:
       - name: DYJetsToNuNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/DYJetsToNuNu_HT100to200
@@ -130,9 +140,10 @@ samples:
       - name: DYJetsToNuNu_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/DYJetsToNuNu_HT2500toInf
   - name: QCD
+    title: "QCD"
     type: Background
     attributes:
-      fill_color: kWhite
+      color: kMagenta+3
     samples:
       - name: QCD_HT50to100
         samples:
@@ -189,12 +200,15 @@ samples:
           - name: QCD_HT2000toInf_madgraph
             directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/QCD_HT2000toInf_madgraph
   - name: SMS_T2tt_mStop_500_mLSP_420
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 420"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_420
   - name: SMS_T2tt_mStop_500_mLSP_450
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 450"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_450
   - name: SMS_T2tt_mStop_500_mLSP_470
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 470"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_470
 ---
@@ -202,8 +216,10 @@ name: MetLepEnergy_nanoNtuple_v6
 period: Run2016postVFP
 samples:
   - name: SingleMuon
+    title: "Single #mu"
     type: Data
     attributes:
+      integrated_luminosity: 16.5
       trigger:
         - HLT_Mu50
         - HLT_TkMu50
@@ -215,8 +231,10 @@ samples:
       - name: Run2016H_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/SingleMuon_Run2016H_UL
   - name: SingleElectron
+    title: "Single e"
     type: Data
     attributes:
+      integrated_luminosity: 16.5
       trigger:
         - HLT_Ele27_WPTight_Gsf
     samples:
@@ -227,9 +245,10 @@ samples:
       - name: Run2016H_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/SingleElectron_Run2016H_UL
   - name: WJets
+    title: "W + Jets"
     type: Background
     attributes:
-      fill_color: kRed
+      color: 8
     samples:
       - name: WJetsToLNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/WJetsToLNu_HT100to200
@@ -246,18 +265,20 @@ samples:
       - name: WJetsToLNu_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/WJetsToLNu_HT2500toInf
   - name: TT
+    title: "t#bar{t}"
     type: Background
     attributes:
-      fill_color: kBlue
+      color: kAzure+1
     samples:
       - name: TTLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/TTLep_pow_CP5
       - name: TTSingleLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/TTSingleLep_pow_CP5
   - name: T
+    title: "Single t"
     type: Background
     attributes:
-      fill_color: kBlue
+      color: kAzure+1
     samples:
       - name: T_tch_pow
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/T_tch_pow
@@ -268,9 +289,10 @@ samples:
       - name: TBar_tWch_ext
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/TBar_tWch_ext
   - name: TTX
+    title: "t#bar{t} #rightarrow X"
     type: Background
     attributes:
-      fill_color: kGreen
+      color: kAzure-7
     samples:
       - name: TTZ_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/TTZ_LO
@@ -281,9 +303,10 @@ samples:
       - name: TTWToQQ
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/TTWToQQ
   - name: DY
+    title: "#gamma/Z^{*}"
     type: Background
     attributes:
-      fill_color: kYellow
+      color: kMagenta-6
     samples:
       - name: DYJetsToLL_M50_HT70to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/DYJetsToLL_M50_HT70to100
@@ -302,9 +325,10 @@ samples:
       - name: DYJetsToLL_M50_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/DYJetsToLL_M50_HT2500toInf
   - name: DYINV
+    title: "#gamma/Z^{*} #rightarrow #nu#bar{#nu}"
     type: Background
     attributes:
-      fill_color: kPink
+      color: kOrange-3
     samples:
       - name: DYJetsToNuNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/DYJetsToNuNu_HT100to200
@@ -321,9 +345,10 @@ samples:
       - name: DYJetsToNuNu_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/DYJetsToNuNu_HT2500toInf
   - name: QCD
+    title: "QCD"
     type: Background
     attributes:
-      fill_color: kWhite
+      color: kMagenta+3
     samples:
       - name: QCD_HT50to100
         samples:
@@ -380,12 +405,15 @@ samples:
           - name: QCD_HT2000toInf_madgraph
             directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/QCD_HT2000toInf_madgraph
   - name: SMS_T2tt_mStop_500_mLSP_420
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 420"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_420
   - name: SMS_T2tt_mStop_500_mLSP_450
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 450"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_450
   - name: SMS_T2tt_mStop_500_mLSP_470
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 470"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_470
 ---
@@ -393,12 +421,14 @@ name: MetLepEnergy_nanoNtuple_v6
 period: Run2017
 samples:
   - name: SingleMuon
+    title: "Single #mu"
     type: Data
     attributes:
+      integrated_luminosity: 41.48
       trigger:
         - HLT_Mu50
-        - HLT_OldMu100
-        - HLT_TkMu100
+        # - HLT_OldMu100
+        # - HLT_TkMu100
     samples:
       - name: Run2017B_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/SingleMuon_Run2017B_UL
@@ -411,8 +441,10 @@ samples:
       - name: Run2017F_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/SingleMuon_Run2017F_UL
   - name: SingleElectron
+    title: "Single e"
     type: Data
     attributes:
+      integrated_luminosity: 41.48
       trigger:
         - HLT_Ele35_WPTight_Gsf
     samples:
@@ -427,9 +459,10 @@ samples:
       - name: Run2017F_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/SingleElectron_Run2017F_UL
   - name: WJets
+    title: "W + Jets"
     type: Background
     attributes:
-      fill_color: kRed
+      color: 8
     samples:
       - name: WJetsToLNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/WJetsToLNu_HT100to200
@@ -446,18 +479,20 @@ samples:
       - name: WJetsToLNu_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/WJetsToLNu_HT2500toInf
   - name: TT
+    title: "t#bar{t}"
     type: Background
     attributes:
-      fill_color: kBlue
+      color: kAzure+1
     samples:
       - name: TTLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/TTLep_pow_CP5
       - name: TTSingleLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/TTSingleLep_pow_CP5
   - name: T
+    title: "Single t"
     type: Background
     attributes:
-      fill_color: kBlue
+      color: kAzure+1
     samples:
       - name: T_tch_pow
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/T_tch_pow
@@ -468,9 +503,10 @@ samples:
       - name: TBar_tWch_ext
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/TBar_tWch_ext
   - name: TTX
+    title: "t#bar{t} #rightarrow X"
     type: Background
     attributes:
-      fill_color: kGreen
+      color: kAzure-7
     samples:
       - name: TTZ_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/TTZ_LO
@@ -479,9 +515,10 @@ samples:
       - name: TTW_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/TTW_LO
   - name: DY
+    title: "#gamma/Z^{*}"
     type: Background
     attributes:
-      fill_color: kYellow
+      color: kMagenta-6
     samples:
       - name: DYJetsToLL_M50_HT70to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/DYJetsToLL_M50_HT70to100
@@ -500,9 +537,10 @@ samples:
       - name: DYJetsToLL_M50_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/DYJetsToLL_M50_HT2500toInf
   - name: DYINV
+    title: "#gamma/Z^{*} #rightarrow #nu#bar{#nu}"
     type: Background
     attributes:
-      fill_color: kPink
+      color: kOrange-3
     samples:
       - name: DYJetsToNuNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/DYJetsToNuNu_HT100to200
@@ -519,9 +557,10 @@ samples:
       - name: DYJetsToNuNu_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/DYJetsToNuNu_HT2500toInf
   - name: QCD
+    title: "QCD"
     type: Background
     attributes:
-      fill_color: kWhite
+      color: kMagenta+3
     samples:
       - name: QCD_HT50to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/QCD_HT50to100
@@ -542,12 +581,15 @@ samples:
       - name: QCD_HT2000toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/QCD_HT2000toInf
   - name: SMS_T2tt_mStop_500_mLSP_420
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 420"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_420
   - name: SMS_T2tt_mStop_500_mLSP_450
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 450"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_450
   - name: SMS_T2tt_mStop_500_mLSP_470
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 470"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_470
 ---
@@ -555,8 +597,10 @@ name: MetLepEnergy_nanoNtuple_v6
 period: Run2018
 samples:
   - name: SingleMuon
+    title: "Single #mu"
     type: Data
     attributes:
+      integrated_luminosity: 59.83
       trigger:
         - HLT_Mu50
         - HLT_OldMu100
@@ -571,8 +615,10 @@ samples:
       - name: Run2018D_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/SingleMuon_Run2018D_UL
   - name: SingleElectron
+    title: "Single e"
     type: Data
     attributes:
+      integrated_luminosity: 59.83
       trigger:
         - HLT_Ele32_WPTight_Gsf
     samples:
@@ -585,9 +631,10 @@ samples:
       - name: Run2018D_UL
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/SingleElectron_Run2018D_UL
   - name: WJets
+    title: "W + Jets"
     type: Background
     attributes:
-      fill_color: kRed
+      color: 8
     samples:
       - name: WJetsToLNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/WJetsToLNu_HT100to200
@@ -604,18 +651,20 @@ samples:
       - name: WJetsToLNu_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/WJetsToLNu_HT2500toInf
   - name: TT
+    title: "t#bar{t}"
     type: Background
     attributes:
-      fill_color: kBlue
+      color: kAzure+1
     samples:
       - name: TTLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/TTLep_pow_CP5
       - name: TTSingleLep_pow_CP5
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/TTSingleLep_pow_CP5
   - name: T
+    title: "Single t"
     type: Background
     attributes:
-      fill_color: kBlue
+      color: kAzure+1
     samples:
       - name: T_tch_pow
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/T_tch_pow
@@ -626,9 +675,10 @@ samples:
       - name: TBar_tWch_ext
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/TBar_tWch_ext
   - name: TTX
+    title: "t#bar{t} #rightarrow X"
     type: Background
     attributes:
-      fill_color: kGreen
+      color: kAzure-7
     samples:
       - name: TTZ_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/TTZ_LO
@@ -637,9 +687,10 @@ samples:
       - name: TTW_LO
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/TTW_LO
   - name: DY
+    title: "#gamma/Z^{*}"
     type: Background
     attributes:
-      fill_color: kYellow
+      color: kMagenta-6
     samples:
       - name: DYJetsToLL_M50_HT70to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/DYJetsToLL_M50_HT70to100
@@ -658,9 +709,10 @@ samples:
       - name: DYJetsToLL_M50_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/DYJetsToLL_M50_HT2500toInf
   - name: DYINV
+    title: "#gamma/Z^{*} #rightarrow #nu#bar{#nu}"
     type: Background
     attributes:
-      fill_color: kPink
+      color: kOrange-3
     samples:
       - name: DYJetsToNuNu_HT100to200
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/DYJetsToNuNu_HT100to200
@@ -677,9 +729,10 @@ samples:
       - name: DYJetsToNuNu_HT2500toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/DYJetsToNuNu_HT2500toInf
   - name: QCD
+    title: "QCD"
     type: Background
     attributes:
-      fill_color: kWhite
+      color: kMagenta+3
     samples:
       - name: QCD_HT50to100
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/QCD_HT50to100
@@ -700,11 +753,14 @@ samples:
       - name: QCD_HT2000toInf
         directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/QCD_HT2000toInf
   - name: SMS_T2tt_mStop_500_mLSP_420
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 420"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_420
   - name: SMS_T2tt_mStop_500_mLSP_450
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 450"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_450
   - name: SMS_T2tt_mStop_500_mLSP_470
+    title: "m_{#tilde{t}}=500, m_{#tilde{#chi}} = 470"
     type: Signal
     directory: /store/user/liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v6/MetLepEnergy/SMS_T2tt_mStop_500_mLSP_470
