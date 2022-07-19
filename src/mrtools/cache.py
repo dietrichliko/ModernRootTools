@@ -3,42 +3,51 @@ import concurrent.futures as futures
 import fnmatch
 import itertools
 import logging
-import os
 import pathlib
 import sys
 from collections.abc import Generator
-from contextlib import AbstractContextManager
-from mrtools import configuration
+from mrtools import config
 from mrtools import model
 from types import TracebackType
-from typing import List
+from typing import Any
+from typing import Iterator
 from typing import Literal
-from typing import Optional
+from typing import Sequence
 from typing import TextIO
+from typing import Tuple
 from typing import Type
-from typing import Union
 
-# For CMSSW ruamel.yaml has been renamed yaml ....
-if "CMSSW_BASE" in os.environ:
-    import yaml  # type: ignore
-else:
-    import ruamel.yaml as yaml  # type: ignore
+import click
+import ruamel.yaml as yaml
 
 log = logging.getLogger(__name__)
-config = configuration.get()
+cfg = config.get()
 
-PathOrStr = Union[str, pathlib.Path]
+_click_options: dict[str, Any] = {}
+
+PathOrStr = str | pathlib.Path
+PurePathOrStr = str | pathlib.PurePath
 
 
-class SamplesCache(AbstractContextManager):
+class SamplesCache:
     """SampleCache."""
 
     _root: model.SampleGroup
     _threads: int
 
-    def __init__(self, threads: int = 4) -> None:
+    def __init__(self, threads: int = None) -> None:
+        """Init samples cache.
+
+        Args:
+            threads (int): Threads to query DAS
+        """
         self._root = model.SampleGroup("", model.SampleType.UNKNOWN, None)
-        self._threads = threads or config.sc.threads
+        if threads is not None:
+            self._threads
+        elif "cache_threads" in _click_options:
+            self._threads = _click_options["cache_threads"]
+        else:
+            self._threads = cfg.sc.root_threads
 
     def __enter__(self) -> "SamplesCache":
         """Context manager enter."""
@@ -46,12 +55,29 @@ class SamplesCache(AbstractContextManager):
 
     def __exit__(
         self,
-        exc_type: Optional[Type[BaseException]],
-        exc_value: Optional[BaseException],
-        traceback: Optional[TracebackType],
+        exc_type: Type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackType | None,
     ) -> Literal[False]:
         """Context manager exit."""
         return False
+
+    def get(self, path: PurePathOrStr) -> model.SampleBase | None:
+        """Access a sample by its path path."""
+        if not isinstance(path, pathlib.PurePath):
+            path = pathlib.PurePath(path)
+
+        if path.parts[1] != self._root.name:
+            return None
+
+        sample: model.SampleBase | None = self._root
+        for name in path.parts[2:]:
+            if not isinstance(sample, model.SampleGroup):
+                return None
+            if (sample := sample.get(name)) is None:
+                return None
+
+        return sample
 
     def load(self, input: PathOrStr) -> None:
         """Load and prepare samples from YAML file.
@@ -131,6 +157,7 @@ class SamplesCache(AbstractContextManager):
             period: datataking periode (none for all periods)
             types: Sample type (single value or container)
         """
+        samples: Iterator[model.SampleBase]
         if not period:
             samples = itertools.chain.from_iterable(
                 (s.children for s in self._root.children)
@@ -147,43 +174,65 @@ class SamplesCache(AbstractContextManager):
     def find(
         self,
         period: str = "",
-        pattern: Union[None, str, List[str]] = None,
-        types: model.SampleTypeSpec = None,
+        pattern: Sequence[str] | str | None = None,
+        types: model.SampleTypeSpec | None = None,
     ) -> Generator[model.SampleBase, None, None]:
         """Find samples with a specific name and type in a period.
 
         Arguments:
-            period: Running period (empty for all periodes)
-            pattern: Sample name (wildcard supported)
-            types: Sample type (single value or container)
+            period (str): Running period (empty for all periodes)
+            pattern (Sequence[str] | str | None): Sample name (wildcard supported)
+            types (model.SampleTypeSpec): Sample type (single value or container)
         """
-        def _filter_name(name: str, pattern: Union[None, str, List[str]])-> bool:
+
+        def _filter_name(name: str, pattern: Sequence[str] | str | None) -> bool:
 
             if pattern is None:
                 return True
-            elif isinstance(pattern, list):
-                return any(( fnmatch.fnmatch(name, p) for p in pattern))
-            else:
+            elif isinstance(pattern, str):
                 return fnmatch.fnmatch(name, pattern)
-                
-        root = self._root.get(period) if period else self._root
-        if root is None:
-            log.error("Period %s not found", period)
-            return
+            else:
+                return any((fnmatch.fnmatch(name, p) for p in pattern))
+
+        if period:
+            root = self._root.get(period)
+            if root is None:
+                log.error("Period %s not found", period)
+                return
+        else:
+            root = self._root
 
         for _, samples, groups in model.walk(root):
             for s in itertools.chain(samples, groups):
                 if _filter_name(s.name, pattern) and model.filter_types(s, types):
                     yield s
 
+    def walk(
+        self, period: str = "", topdown=True
+    ) -> Generator[
+        Tuple[model.SampleBase, Iterator[model.Sample], Iterator[model.SampleGroup]],
+        None,
+        None,
+    ]:
+        """Walk samples tree."""
+        if period:
+            root = self._root.get(period)
+            if root is None:
+                log.error("Period %s not found", period)
+                return
+        else:
+            root = self._root
+
+        for y in model.walk(root, topdown):
+            yield y
+
     def print_tree(
         self,
-        node: Optional[model.SampleBase] = None,
+        node: model.SampleBase = None,
         indent: int = 0,
-        file: Optional[TextIO] = sys.stdout,
+        file: TextIO = sys.stdout,
     ) -> None:
         """Print samples tree."""
-
         if node is None:
             node = self._root
 
@@ -191,3 +240,24 @@ class SamplesCache(AbstractContextManager):
 
         for sample in node.children:
             self.print_tree(sample, indent + 2, file=file)
+
+
+def click_options():
+    """Clock options for cache."""
+
+    def _set_threads(ctx, param, value):
+        _click_options["cache_threads"] = int(value)
+
+    def decorator(f):
+
+        return click.option(
+            "--cache-threads",
+            metavar="THREADS",
+            callback=_set_threads,
+            expose_value=False,
+            default=4,
+            type=click.IntRange(1),
+            help="Cache threads",
+        )(f)
+
+    return decorator

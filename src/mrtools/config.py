@@ -4,7 +4,7 @@ The configuration is a singleton object.
 
 Usage:
 
-    configuration.load()
+    configuration.load(config_file, site)
     config = configuration.get()
 
 
@@ -15,16 +15,22 @@ import pathlib
 import os
 from dataclasses import dataclass
 import logging
-from typing import Union, Any
+from typing import Any
 import shutil
 import sys
 import socket
 
 import tomli
+import click
 
 log = logging.getLogger(__name__)
+_click_option: dict[str, Any] = {}
 
-PathOrStr = Union[pathlib.Path, str]
+PathOrStr = pathlib.Path | str
+
+DEFAULT_CONFIG_PATH = (
+    f'{os.environ.get("XDG_CONFIG_HOME", "~/.config")}' "/mrtools/mrtools.toml"
+)
 
 
 def _find_site(data: dict[str, Any]) -> str:
@@ -58,11 +64,11 @@ def _get_str(data: dict[str, Any], name: str, default: str = "") -> str:
 def _get_path(data: dict[str, Any], name: str, default: str = "") -> pathlib.Path:
     """Get path from dictionary."""
     value = data.get(name, default)
-    return pathlib.Path(value)
+    return pathlib.Path(os.path.expandvars(value))
 
 
 def _get_int(data: dict[str, Any], name: str, default: int = None) -> int:
-    """Get int fro  dictionary."""
+    """Get int from  dictionary."""
     value = data.get(name, default)
     return int(value)
 
@@ -86,8 +92,10 @@ class Binaries:
 class SamplesCache:
     """SamplesCache configurations."""
 
-    threads: int = 0
+    root_threads: int = 0
     xrdcp_retry: int = 0
+    workers: int = 0
+    max_workers: int = 0
 
 
 @dataclass
@@ -96,10 +104,14 @@ class Site:
 
     store_path: pathlib.Path = pathlib.Path("")
     cache_path: pathlib.Path = pathlib.Path("")
+    local_path: pathlib.Path = pathlib.Path("")
+    log_path: pathlib.Path = pathlib.Path("")
     local_url: str = ""
     global_url: str = ""
     stage: bool = True
-    batch: str = ""
+    batch_system: str = ""
+    batch_walltime: str = ""
+    batch_memory: str = ""
 
 
 @dataclass
@@ -122,16 +134,11 @@ class Configuration:
         Raises:
             MRTError if configuration is already loaded
         """
-        if config_path == "":
-            config_path = (
-                pathlib.Path(
-                    os.environ.get("XDG_CONFIG_HOME", "~/.config")
-                ).expanduser()
-                / "mrtools/mrtools.toml"
-            )
-
-        elif isinstance(config_path, str):
-            config_path = pathlib.Path(config_path)
+        config_path = (
+            config_path or _click_option.get("config_file") or DEFAULT_CONFIG_PATH
+        )
+        if isinstance(config_path, str):
+            config_path = pathlib.Path(config_path).expanduser()
 
         if not config_path.exists():
             log.info("Creating configuration file %s", config_path)
@@ -140,6 +147,7 @@ class Configuration:
                 pathlib.Path(__file__).with_name("mrtools.toml"), config_path
             )
 
+        log.debug("Reading config file %s", config_path)
         with open(config_path, "rb") as input:
             try:
                 config_data = tomli.load(input)
@@ -160,26 +168,63 @@ class Configuration:
         cdata = config_data.get("samples_cache", {})
         self.sc = SamplesCache(
             xrdcp_retry=_get_int(cdata, "xrdcp_retry", 3),
-            threads=_get_int(cdata, "xrdcp_retry", 4),
+            root_threads=_get_int(cdata, "root_threats", 4),
+            workers=_get_int(cdata, "workers", 4),
+            max_workers=_get_int(cdata, "max_workers", 0),
         )
 
         # find site name
         cdata = config_data.get("site", {})
+        site = site or _click_option["config_site"] or _find_site(cdata)
         if not site:
-            site = _find_site(cdata)
-            if not site:
-                log.fatal("Could not identify site")
-                sys.exit()
-
+            log.fatal("Could not identify site")
+            sys.exit()
+        log.debug("Site %s", site)
         cdata = cdata.get(site)
+        if not cdata:
+            log.fatal("Site %s is unknown", site)
+            sys.exit()
         self.site = Site(
             stage=_get_boolean(cdata, "stage", False),
             local_url=_get_str(cdata, "local_url"),
             global_url=_get_str(cdata, "global_url"),
             cache_path=_get_path(cdata, "cache_path"),
+            local_path=_get_path(cdata, "local_path"),
+            log_path=_get_path(cdata, "log_path"),
             store_path=_get_path(cdata, "store_path"),
-            batch=_get_str(cdata, "batch", ""),
+            batch_system=_get_str(cdata, "batch_system", ""),
+            batch_walltime=_get_str(cdata, "batch_walltime", "01:00:00"),
+            batch_memory=_get_str(cdata, "batch_memory", "2GB"),
         )
+
+
+def click_options():
+    def _set_config_file(ctx, param, value):
+        _click_option["config_file"] = value
+
+    def _set_site(ctx, param, value):
+        _click_option["config_site"] = value
+
+    def decorator(f):
+        f = click.option(
+            "--config-file",
+            callback=_set_config_file,
+            expose_value=False,
+            default=None,
+            type=click.Path(exists=True, resolve_path=True, path_type=pathlib.Path),
+            help="Configuration file (default:  ~/.config/mrtools/mrtools.toml)",
+        )(f)
+        f = click.option(
+            "--config-site",
+            metavar="SITE",
+            callback=_set_site,
+            expose_value=False,
+            default="",
+            help="Site name (default: derived from host domain name)",
+        )(f)
+        return f
+
+    return decorator
 
 
 def get() -> Configuration:

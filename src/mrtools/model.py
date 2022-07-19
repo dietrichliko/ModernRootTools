@@ -38,29 +38,28 @@ import subprocess
 import sys
 import time
 from collections import defaultdict
-from collections.abc import Collection
 from collections.abc import Generator
-from mrtools import configuration
+from mrtools import config
 from mrtools import exceptions
-from mrtools import utilities
-from typing import Any, Sequence
+from mrtools import utils
+from typing import Any
 from typing import cast
 from typing import Container
 from typing import Iterator
 from typing import Optional
+from typing import Sequence
 from typing import Tuple
-from typing import Union
+from typing import TypeAlias
 
 import ROOT
 from datasize import DataSize
 
 log = logging.getLogger(__name__)
-config = configuration.get()
+cfg = config.get()
 
-PathOrStr = Union[str, pathlib.Path]
-PurePathOrStr = Union[str, pathlib.PurePath]
-
-SampleTypeSpec = Union[None, "SampleType", Container["SampleType"]]
+PathOrStr = pathlib.Path | str
+PurePathOrStr = pathlib.PurePath | str
+SampleTypeSpec: TypeAlias = Container["SampleType"] | "SampleType"
 
 
 class SampleFileState(enum.Enum):
@@ -80,25 +79,25 @@ class SampleFile:
     _name: str
     _size: DataSize
     _state: SampleFileState
-    _entries: Optional[int]
-    _checksum: Optional[int]
+    _entries: int | None
+    _checksum: int | None
     _attrs: dict[str, Any]
-    _price: Optional[float]
-    _value: Optional[float]
-    _ts: Optional[float]
+    _price: float | None
+    _value: float | None
+    _ts: float | None
 
     def __init__(
         self,
         sample: "SampleBase",
         path: PurePathOrStr,
-        size: Union[int, DataSize],
+        size: DataSize | int,
         *,
         state: SampleFileState = SampleFileState.OK,
-        entries: Optional[int] = None,
-        checksum: Optional[int] = None,
-        price: Optional[float] = None,
-        value: Optional[float] = None,
-        ts: Optional[float] = None,
+        entries: int = None,
+        checksum: int = None,
+        price: float = None,
+        value: float = None,
+        ts: float = None,
     ) -> None:
         """Init File.
 
@@ -153,12 +152,12 @@ class SampleFile:
         return self._size
 
     @property
-    def entries(self) -> Optional[int]:
+    def entries(self) -> int | None:
         """Number of entries of the ROOT tree."""
         return self._entries
 
     @property
-    def checksum(self) -> Optional[int]:
+    def checksum(self) -> int | None:
         """Adler32 checksum of the file."""
         return self._checksum
 
@@ -174,21 +173,21 @@ class SampleFile:
         """
         if self._state == SampleFileState.OK:
             if self._dirname.startswith("/store/"):
-                path = f"{config.site.store_path}{self._dirname}/{self._name}"
+                path = f"{cfg.site.store_path}{self._dirname}/{self._name}"
                 if os.path.exists(path):
-                    return f"{config.site.local_url}/{path}"
+                    return f"{cfg.site.local_url}/{path}"
                 else:
-                    return f"{config.site.global_url}/{path}"
+                    return f"{cfg.site.global_url}/{path}"
             elif self._dirname.startswith("/eos/"):
                 path = f"{self._dirname}/{self._name}"
                 if os.path.exists(path):
-                    return f"{config.site.local_url}/{path}"
+                    return f"{cfg.site.local_url}/{path}"
                 else:
-                    return f"{config.site.global_url}/{path}"
+                    return f"{cfg.site.global_url}/{path}"
             else:
                 return f"file://{self._dirname}/{self._name}"
         elif self._state == SampleFileState.STAGED:
-            return f"file://{config.site.cache_path}{self._dirname[1:]}/{self._name}"
+            return f"file://{cfg.site.cache_path}{self._dirname[1:]}/{self._name}"
         else:
             raise exceptions.MRTError("File %s is in state %s", self, self._state.name)
 
@@ -206,7 +205,7 @@ class SampleFile:
     def get_size(self) -> DataSize:
         """Get the actual file size."""
         if self._dirname.startswith("/store/"):
-            path = f"{config.site.store_path}{self._dirname}/{self._name}"
+            path = f"{cfg.site.store_path}{self._dirname}/{self._name}"
         else:
             path = f"{self._dirname}/{self._name}"
         if not os.path.exists(path):
@@ -232,7 +231,7 @@ class SampleFile:
             MRTError: failed to retrieve checksum
         """
         if from_data:
-            return utilities.xrd_checksum(self.url)
+            return utils.xrd_checksum(self.url)
         else:
             try:
                 checksum = int(
@@ -253,14 +252,14 @@ class SampleFile:
             raise exceptions.ModelError(
                 "File {self} in state {self._state.name} and cannot be staged."
             )
-        stage_path = os.path.join(config.site.cache_path, str(self)[1:])
+        stage_path = os.path.join(cfg.site.cache_path, str(self)[1:])
         log.debug("Stageing %s ...", self)
         cmd = [
-            config.bin.xrdcp,
+            cfg.bin.xrdcp,
             "--nopbar",
             "--force",
             "--retry",
-            str(config.sc.xrdcp_retry),
+            str(cfg.sc.xrdcp_retry),
         ]
         if self.checksum is not None:
             cmd += ["--cksum", f"adler32:{self.checksum:08x}"]
@@ -287,7 +286,7 @@ class SampleType(enum.Enum):
     SIGNAL = 4
 
 
-class SampleBase(Collection):
+class SampleBase:
     """Base class for all sample types."""
 
     _name: str
@@ -301,10 +300,10 @@ class SampleBase(Collection):
         self,
         name: str,
         type: SampleType,
-        parent: Optional["SampleGroup"] = None,
+        parent: "SampleGroup" = None,
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[dict[str, Any]] = None,
+        attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise the base class.
 
@@ -392,10 +391,10 @@ class SampleBase(Collection):
         pass
 
     @property
-    def entries(self) -> Optional[int]:
+    def entries(self) -> int | None:
         """Number of entries of the trees."""
         try:
-            return sum(f._entries for f in iter(self))
+            return sum(f._entries for f in iter(self))  # type: ignore
         except TypeError:
             return None
 
@@ -404,11 +403,11 @@ class SampleBase(Collection):
         """Size of the contained files."""
         return DataSize(sum(f._size for f in iter(self)))
 
-    def chain(self, max: Optional[int] = None) -> Any:
+    def chain(self, max_files: int = None) -> Any:
         """Iterator on url of the contained files."""
         url_iter: Iterator[str] = (f.url for f in self)
-        if max:
-            url_iter = itertools.islice(url_iter, max)
+        if max_files:
+            url_iter = itertools.islice(url_iter, max_files)
 
         chain = ROOT.TChain(self.tree_name)
         for url in url_iter:
@@ -429,7 +428,7 @@ class Sample(SampleBase):
         parent: "SampleGroup",
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[dict[str, Any]] = None,
+        attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise a sample base class.
 
@@ -491,7 +490,7 @@ class SampleFromFS(Sample):
         filter: str = "",
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[dict[str, Any]] = None,
+        attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise a sample base class.
 
@@ -569,7 +568,7 @@ class SampleFromDAS(Sample):
         instance: str = "",
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[dict[str, Any]] = None,
+        attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise a sample base class.
 
@@ -612,7 +611,7 @@ class SampleFromDAS(Sample):
     def get_files(self) -> None:
         """Get the files from DAS and create file structure."""
         cmd = [
-            config.bin.dasgoclient,
+            cfg.bin.dasgoclient,
             "--json",
             f"--query=file dataset={self._dasname} instance={self._instance}",
         ]
@@ -641,10 +640,10 @@ class SampleGroup(SampleBase):
         self,
         name: str,
         type: SampleType,
-        parent: Optional["SampleGroup"] = None,
+        parent: "SampleGroup" = None,
         tree_name: str = "",
         title: str = "",
-        attrs: Optional[dict[str, Any]] = None,
+        attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise a sample base class.
 
@@ -679,7 +678,7 @@ class SampleGroup(SampleBase):
         """Iterator on children samples."""
         return iter(self._children.values())
 
-    def get(self, name: str) -> Optional[SampleBase]:
+    def get(self, name: str) -> SampleBase | None:
         """Access a child sample by name."""
         return self._children.get(name)
 
@@ -775,11 +774,11 @@ def filter_types(sample: SampleBase, types: SampleTypeSpec = None) -> bool:
     The requested type can be specified by single value or by a container.
 
     filter_sample(sample, SampleType.DATA)
-    filter_sample(sample, [SampleType.Background, SampleType.Signal])
+    filter_sample(sample, [SampleType.BACKGROUND, SampleType.SIGNAL])
     """
     if types is None:
         return True
-    elif isinstance(types, Sequence):
-        return sample.type in types
-    else:
+    elif isinstance(types, SampleType):
         return sample.type == types
+    else:
+        return sample.type in types

@@ -1,8 +1,7 @@
-python=3.10.2
-root=6.26
+python>=3.10
+root>=6.26
 cxx-compiler
 poetry
 git
-voms
 cmake
 curl

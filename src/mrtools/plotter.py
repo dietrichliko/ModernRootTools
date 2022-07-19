@@ -1,15 +1,18 @@
 """Moder ROOT Tools Plot Routines."""
 import itertools
+import json
 import logging
 import math
 import pathlib
 from collections.abc import Sequence
+from mrtools import cache
+from mrtools import model
 from typing import Any
-from typing import Optional
 from typing import Tuple
 from typing import Union
 
 import ROOT
+import ruamel.yaml
 
 log = logging.getLogger(__name__)
 
@@ -24,11 +27,11 @@ def stackplot(  # noqa: C901
     logy: bool = False,
     x_label: str = "",
     y_label: str = "",
-    y_min: Optional["float"] = None,
-    y_max: Optional["float"] = None,
+    y_min: float = None,
+    y_max: float = None,
     sort_background: bool = True,
     marker_size: float = 0.5,
-    scale: Optional[float] = None,
+    scale: float = None,
     normalise: bool = False,
     ratio_plot: bool = True,
     ratio_plot_height: int = 200,
@@ -229,3 +232,309 @@ def stackplot(  # noqa: C901
     ROOT.gErrorIgnoreLevel = ROOT.kWarning
     c1.SaveAs(str(output))
     ROOT.gErrorIgnoreLevel = save
+
+    c1.Write()
+
+
+def tdr_style() -> None:
+    """CMS TDR style."""
+    style = ROOT.TStyle("tdrStyle", "Style for P-TDR")
+
+    # canvas
+    style.SetCanvasBorderMode(0)
+    style.SetCanvasColor(ROOT.kWhite)
+    style.SetCanvasDefH(600)  # Height of canvas
+    style.SetCanvasDefW(600)  # Width of canvas
+    style.SetCanvasDefX(0)  # Position on screen
+    style.SetCanvasDefY(0)
+
+    # pad
+    style.SetPadBorderMode(0)
+    # style.SetPadBorderSize(1)
+    style.SetPadColor(ROOT.kWhite)
+    style.SetPadGridX(False)
+    style.SetPadGridY(False)
+    style.SetGridColor(0)
+    style.SetGridStyle(3)
+    style.SetGridWidth(1)
+
+    # For the histo:
+    # style.SetHistFillColor(1)
+    # style.SetHistFillStyle(0)
+    style.SetHistLineColor(1)
+    style.SetHistLineStyle(0)
+    style.SetHistLineWidth(1)
+    # style.SetLegoInnerR(Float_t rad = 0.5)
+    # style.SetNumberContours(Int_t number = 20)
+
+    style.SetEndErrorSize(2)
+    # style.SetErrorMarker(20)
+    style.SetErrorX(0.0)
+
+    style.SetMarkerStyle(20)
+
+    # For the fit/function:
+    style.SetOptFit(1)
+    style.SetFitFormat("5.4g")
+    style.SetFuncColor(2)
+    style.SetFuncStyle(1)
+    style.SetFuncWidth(1)
+
+    # For the date:
+    style.SetOptDate(0)
+    # style.SetDateX(Float_t x = 0.01)
+    # style.SetDateY(Float_t y = 0.01)
+
+    # For the statistics box:
+    style.SetOptFile(0)
+    style.SetOptStat(0)  # To display the mean and RMS:   SetOptStat("mr")
+    style.SetStatColor(ROOT.kWhite)
+    style.SetStatFont(42)
+    style.SetStatFontSize(0.025)
+    style.SetStatTextColor(1)
+    style.SetStatFormat("6.4g")
+    style.SetStatBorderSize(1)
+    style.SetStatH(0.1)
+    style.SetStatW(0.15)
+    # style.SetStatStyle(1001)
+    # style.SetStatX(0)
+    # style.SetStatY(0)
+
+    # Margins:
+    style.SetPadTopMargin(0.05)
+    style.SetPadBottomMargin(0.13)
+    style.SetPadLeftMargin(0.16)
+    style.SetPadRightMargin(0.02)
+
+    # For the Global title:
+
+    style.SetOptTitle(0)
+    style.SetTitleFont(42)
+    style.SetTitleColor(1)
+    style.SetTitleTextColor(1)
+    style.SetTitleFillColor(10)
+    style.SetTitleFontSize(0.05)
+    # style.SetTitleH(0) # Set the height of the title box
+    # style.SetTitleW(0) # Set the width of the title box
+    # style.SetTitleX(0) # Set the position of the title box
+    # style.SetTitleY(0.985) # Set the position of the title box
+    # style.SetTitleStyle(1001)
+    # style.SetTitleBorderSize(2)
+
+    # For the axis titles:
+
+    style.SetTitleColor(1, "XYZ")
+    style.SetTitleFont(42, "XYZ")
+    style.SetTitleSize(0.06, "XYZ")
+    # style.SetTitleXSize(0.02) # Another way to set the size?
+    # style.SetTitleYSize(0.02)
+    style.SetTitleXOffset(0.9)
+    style.SetTitleYOffset(1.25)
+    # style.SetTitleOffset(1.1, "Y") # Another way to set the Offset
+
+    # For the axis labels:
+
+    style.SetLabelColor(1, "XYZ")
+    style.SetLabelFont(42, "XYZ")
+    style.SetLabelOffset(0.007, "XYZ")
+    style.SetLabelSize(0.05, "XYZ")
+
+    # For the axis:
+
+    style.SetAxisColor(1, "XYZ")
+    style.SetStripDecimals(True)
+    style.SetTickLength(0.03, "XYZ")
+    style.SetNdivisions(510, "XYZ")
+    style.SetPadTickX(1)  # To get tick marks on the opposite side of the frame
+    style.SetPadTickY(1)
+
+    # Change for log plots:
+    style.SetOptLogx(0)
+    style.SetOptLogy(0)
+    style.SetOptLogz(0)
+
+    # Postscript options:
+    style.SetPaperSize(20.0, 20.0)
+    # style.SetLineScalePS(Float_t scale = 3)
+    # style.SetLineStyleString(Int_t i, const char* text)
+    # style.SetHeaderPS(const char* header)
+    # style.SetTitlePS(const char* pstitle)
+
+    # style.SetBarOffset(Float_t baroff = 0.5)
+    # style.SetBarWidth(Float_t barwidth = 0.5)
+    # style.SetPaintTextFormat(const char* format = "g")
+    # style.SetPalette(Int_t ncolors = 0, Int_t* colors = 0)
+    # style.SetTimeOffset(Double_t toffset)
+    # style.SetHistMinimumZero(kTRUE)
+
+    style.cd()
+
+    return style
+
+
+class SamplesPlotter:
+    """Make stackplots of defined histograms."""
+
+    histos_defs: list[dict[str, Any]]
+    output: pathlib.Path
+    name: str
+
+    def __init__(
+        self, histos_file: pathlib.Path, output: pathlib.Path, name: str
+    ) -> None:
+        """Init SamplePlotter."""
+        yaml_parser = ruamel.yaml.YAML(typ="safe")
+        with open(histos_file, "r") as inp:
+            self.histos_defs = yaml_parser.load(inp)
+        self.output = output
+        self.name = name
+
+    def plot(self, sc: cache.SamplesCache, period: str) -> None:
+        """Draw stack plots for a period."""
+        output_path = self.output / f"{self.name}_{period}"
+        output_path.mkdir(exist_ok=True)
+
+        inp_root_path = output_path.with_suffix(".root")
+        if not inp_root_path.exists():
+            log.fatal("Input %s does not exists", inp_root_path)
+            return
+        log.info("Reading histograms from %s", inp_root_path)
+        inp_root = ROOT.TFile(str(inp_root_path), "READ")
+
+        out_root_path = output_path.with_suffix(".plots.root")
+        log.info("Writing plots to %s", out_root_path)
+        out_root = ROOT.TFile(str(out_root_path), "RECREATE")
+
+        with open(output_path.with_suffix(".json"), "r") as input_json:
+            stat = json.load(input_json)
+
+        for h_defs in self.histos_defs:
+
+            df_name = h_defs["dataframe"]
+            log.debug("Histograms in dataframe %s", df_name)
+
+            dat_samples = _get_samples(
+                sc, period, h_defs.get("data_samples"), model.SampleType.DATA
+            )
+            bkg_samples = _get_samples(
+                sc,
+                period,
+                h_defs.get("background_samples"),
+                model.SampleType.BACKGROUND,
+            )
+            sig_samples = _get_samples(
+                sc, period, h_defs.get("signal_samples"), model.SampleType.SIGNAL
+            )
+
+            dat_names = [s.name for s in dat_samples]
+            bkg_names = [s.name for s in bkg_samples]
+            sig_names = [s.name for s in sig_samples]
+
+            log.debug("Data: %s", ", ".join(dat_names))
+            log.debug("Background: %s", ", ".join(bkg_names))
+            log.debug("Signal: %s", ", ".join(sig_names))
+
+            nr_events = stat[dat_names[0]][f"{df_name}_nr_events"]
+            sum_weights = sum(stat[s][f"{df_name}_sum_weights"] for s in bkg_names)
+            scale = nr_events / sum_weights
+            log.info(
+                "Dataframe %s - Data events %d - Background %.1f - Scale %.3f",
+                df_name,
+                nr_events,
+                sum_weights,
+                scale,
+            )
+
+            for h1d in h_defs.get("Histo1D", []):
+                name = h1d["name"]
+                title = h1d.get("title", name)
+                histos_dat = _get_histos(inp_root, h1d, dat_samples)
+                histos_bkg = _get_histos(inp_root, h1d, bkg_samples)
+                histos_sig = _get_histos(inp_root, h1d, sig_samples)
+                if not histos_dat:
+                    log.error("No data found for %s", name)
+                    continue
+                if not histos_bkg:
+                    log.error("No background found for %s", name)
+                    continue
+                stackplot(
+                    output_path / f"{name}_lin.png",
+                    histos_dat,
+                    histos_bkg,
+                    histos_sig,
+                    x_label=title,
+                    # ratio_plot=False,
+                    scale=scale,
+                )
+
+                histos_dat = _get_histos(inp_root, h1d, dat_samples)
+                histos_bkg = _get_histos(inp_root, h1d, bkg_samples)
+                histos_sig = _get_histos(inp_root, h1d, sig_samples)
+                stackplot(
+                    output_path / f"{name}_log.png",
+                    histos_dat,
+                    histos_bkg,
+                    histos_sig,
+                    logy=True,
+                    x_label=title,
+                    # ratio_plot=False,
+                    scale=scale,
+                )
+
+        inp_root.Close()
+        out_root.Close()
+
+
+def _get_samples(
+    sc: cache.SamplesCache,
+    period: str,
+    pattern: dict[str, Any] | list[str] | str | None = None,
+    types: model.SampleTypeSpec = None,
+) -> list[model.SampleBase]:
+
+    if isinstance(pattern, dict):
+        if period in pattern:
+            the_pattern = pattern[period]
+        else:
+            the_pattern = pattern["default"]
+        samples = sc.find(period, the_pattern, types)
+    elif pattern is not None:
+        samples = sc.find(period, pattern, types)
+    else:
+        samples = sc.list(period, types=types)
+    return list(samples)
+
+
+def _get_histos(
+    tree: Any, hd: dict[str, Any], samples: list[model.SampleBase]
+) -> list[Tuple[Any, str, int]]:
+    """Read histograms from ROOT tree.
+
+    tree (ROOT.TTree): ROOT TTree
+    hid (dict[str, Any]): Histogram definition
+    samples (list[model.SampleBase]): :ist of samples
+
+    Returns
+        list[Tuple[Any, str, int]] - List of tuples with histogram,
+                sample name and sample color
+    """
+    histos: list[Tuple[Any, str, int]] = []
+    name = hd["name"]
+    for s in samples:
+        subdir = "_".join(s.path.parts[3:])
+        h = tree.Get(f"{subdir}/{name}")
+        if not h:
+            log.error("Histogram %s/%s not found.", subdir, name)
+            continue
+        h.SetName(s.name)
+        if "color" in s.attrs:
+            color = s.attrs["color"]
+            if isinstance(color, str) and color[0] == "k":
+                color = eval(f"ROOT.{color}")
+            color = int(color)
+        else:
+            color = None
+
+        histos.append((h, s.title, color))
+
+    return histos
