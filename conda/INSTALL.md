@@ -10,11 +10,12 @@ Create __mrtools-root624-py310__ virtual environment. It covers the installation
 of packages, that cannot be installed with _poetry_ (or _pip_)
 
     conda activate my-base
-    mamba create -y -n mrtools-root624-py310 -c conda-forge --file=pkgs-root624-py310.txt
+    mamba create -y -n mrt -c conda-forge --file=pkgs-root624-py310.txt
     conda deactivate my-base
 
 Install __MRTools__ and its associated python packages. _poetry_ provides better control
 of python packages. As _conda_ and _poetry_ are not interoperable, the environment has to be recreated from scratch for modifications.
 
-    conda activate mrtools-root624-py310
+    conda activate mrt
+    pip install poetry
     poetry install

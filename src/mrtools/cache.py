@@ -29,6 +29,16 @@ PathOrStr = str | pathlib.Path
 PurePathOrStr = str | pathlib.PurePath
 
 
+def filter_name(name: str, pattern: Sequence[str] | str | None) -> bool:
+
+    if not pattern:
+        return True
+    elif isinstance(pattern, str):
+        return fnmatch.fnmatch(name, pattern)
+    else:
+        return any((fnmatch.fnmatch(name, p) for p in pattern))
+
+
 class SamplesCache:
     """SampleCache."""
 
@@ -82,7 +92,7 @@ class SamplesCache:
     def load(self, input: PathOrStr) -> None:
         """Load and prepare samples from YAML file.
 
-        The yaml file can congtain several documents representing various periods.
+        The yaml file can contain several documents representing various periods.
 
         Arguments:
             input: Yaml file.
@@ -91,7 +101,7 @@ class SamplesCache:
 
         with futures.ThreadPoolExecutor(max_workers=self._threads) as e:
             tasks: dict[futures.Future, model.Sample] = {}
-            for _, samples, _ in model.walk(self._root):
+            for _, samples, _ in model.walk(self._root, all=True):
                 tasks |= {e.submit(lambda x: x.get_files(), s): s for s in samples}
 
             for f in futures.as_completed(tasks.keys()):
@@ -169,7 +179,7 @@ class SamplesCache:
                 return
             samples = root.children
 
-        yield from (s for s in samples if model.filter_types(s, types))
+        yield from (s for s in samples if not s.hidden and model.filter_types(s, types))
 
     def find(
         self,
@@ -185,15 +195,6 @@ class SamplesCache:
             types (model.SampleTypeSpec): Sample type (single value or container)
         """
 
-        def _filter_name(name: str, pattern: Sequence[str] | str | None) -> bool:
-
-            if pattern is None:
-                return True
-            elif isinstance(pattern, str):
-                return fnmatch.fnmatch(name, pattern)
-            else:
-                return any((fnmatch.fnmatch(name, p) for p in pattern))
-
         if period:
             root = self._root.get(period)
             if root is None:
@@ -204,7 +205,11 @@ class SamplesCache:
 
         for _, samples, groups in model.walk(root):
             for s in itertools.chain(samples, groups):
-                if _filter_name(s.name, pattern) and model.filter_types(s, types):
+                if (
+                    not s.hidden
+                    and filter_name(s.name, pattern)
+                    and model.filter_types(s, types)
+                ):
                     yield s
 
     def walk(

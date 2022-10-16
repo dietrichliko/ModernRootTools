@@ -8,6 +8,4 @@ dictionaryDefinitions:
     scope: []
 dictionaries:
   - custom-dictionary
-ignoreWords:
-  - DYINV
 import: []

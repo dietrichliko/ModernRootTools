@@ -295,6 +295,7 @@ class SampleBase:
     _tree_name: str
     _title: str
     _attrs: dict[str, Any]
+    hiddenhidden: bool
 
     def __init__(
         self,
@@ -303,6 +304,7 @@ class SampleBase:
         parent: "SampleGroup" = None,
         tree_name: str = "",
         title: str = "",
+        hidden: bool = False,
         attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise the base class.
@@ -313,6 +315,7 @@ class SampleBase:
             parent: Parent Samplegroup.
             tree_name: Name of the ROOT TTree
             title: Name of the sample in ROOT latex format.
+            hidden: hidden datasets
             attrs: User defined attributes.
         """
         self._name = name
@@ -322,6 +325,7 @@ class SampleBase:
             parent._children[name] = self
         self._tree_name = tree_name or "Events"
         self._title = title or name
+        self.hidden = hidden
         self._attrs = attrs or {}
 
     def __str__(self) -> str:
@@ -428,6 +432,7 @@ class Sample(SampleBase):
         parent: "SampleGroup",
         tree_name: str = "",
         title: str = "",
+        hidden: bool = False,
         attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise a sample base class.
@@ -438,9 +443,10 @@ class Sample(SampleBase):
             parent: Parent Samplegroup.
             tree_name: Name of the ROOT TTree
             title: Name of the sample in ROOT latex format.
+            hidden: hidden entry.
             attrs: user defined attributes.
         """
-        super().__init__(name, type, parent, tree_name, title, attrs)
+        super().__init__(name, type, parent, tree_name, title, hidden, attrs)
 
         self._files = defaultdict(dict)
 
@@ -490,6 +496,7 @@ class SampleFromFS(Sample):
         filter: str = "",
         tree_name: str = "",
         title: str = "",
+        hidden: bool = False,
         attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise a sample base class.
@@ -502,9 +509,10 @@ class SampleFromFS(Sample):
             filter: Filename filter (default *.root).
             tree_name: Name of the ROOT TTree.
             title: Name of the sample in ROOT latex format.
+            hidden: hidden entry.
             attrs: User defined attributes.
         """
-        super().__init__(name, type, parent, tree_name, title, attrs)
+        super().__init__(name, type, parent, tree_name, title, hidden, attrs)
 
         self._directory = pathlib.Path(directory)
         self._filter = filter or "*.root"
@@ -521,6 +529,8 @@ class SampleFromFS(Sample):
         ]
         if entries := self.entries:
             items.append(f"entries={entries}")
+        if self.hidden:
+            items.append("hidden=True")
         for key, value in self.attrs.items():
             items.append(f"{key}={value}")
         return f"SampleFromFS({', '.join(items)})"
@@ -568,6 +578,7 @@ class SampleFromDAS(Sample):
         instance: str = "",
         tree_name: str = "",
         title: str = "",
+        hidden: bool = False,
         attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise a sample base class.
@@ -580,9 +591,10 @@ class SampleFromDAS(Sample):
             instance: DAS instance (default guess from dataset name).
             tree_name: Name of the ROOT TTree.
             title: Name of the sample in ROOT latex format.
+            hidden: hidden entry.
             attrs: User defined attributes.
         """
-        super().__init__(name, type, parent, tree_name, title, attrs)
+        super().__init__(name, type, parent, tree_name, title, hidden, attrs)
 
         self._dasname = dasname
         if instance:
@@ -604,6 +616,8 @@ class SampleFromDAS(Sample):
         ]
         if entries := self.entries:
             items.append(f"entries={entries}")
+        if self.hidden:
+            items.append("hidden=True")
         for key, value in self.attrs.items():
             items.append(f"{key}={value}")
         return f"SampleFromDAS({', '.join(items)})"
@@ -643,6 +657,7 @@ class SampleGroup(SampleBase):
         parent: "SampleGroup" = None,
         tree_name: str = "",
         title: str = "",
+        hidden: bool = False,
         attrs: dict[str, Any] = None,
     ) -> None:
         """Initialise a sample base class.
@@ -653,9 +668,10 @@ class SampleGroup(SampleBase):
             parent: Parent Samplegroup.
             tree_name: Name of the ROOT TTree
             title: Name of the sample in ROOT latex format.
+            hidden: hidden entry.
             attrs: User defined attributes.
         """
-        super().__init__(name, type, parent, tree_name, title, attrs)
+        super().__init__(name, type, parent, tree_name, title, hidden, attrs)
         self._children = {}
 
     def __repr__(self) -> str:
@@ -669,6 +685,8 @@ class SampleGroup(SampleBase):
         ]
         if entries := self.entries:
             items.append(f"entries={entries}")
+        if self.hidden:
+            items.append("hidden=True")
         for key, value in self.attrs.items():
             items.append(f"{key}={value}")
         return f"SampleGroup({', '.join(items)})"
@@ -717,6 +735,7 @@ class SampleGroup(SampleBase):
                     self,
                     item.get("tree_name", self.tree_name),
                     item.get("title", name),
+                    item.get("hidden", False),
                     item.get("attributes", {}),
                 )
                 sample_group.load(item["samples"])
@@ -729,6 +748,7 @@ class SampleGroup(SampleBase):
                     item.get("instance"),
                     item.get("tree_name", self.tree_name),
                     item.get("title", name),
+                    item.get("hidden", False),
                     item.get("attributes", {}),
                 )
             elif "directory" in item:
@@ -740,6 +760,7 @@ class SampleGroup(SampleBase):
                     item.get("filter"),
                     item.get("tree_name", self._tree_name),
                     item.get("title", name),
+                    item.get("hidden", False),
                     item.get("attributes", {}),
                 )
 
@@ -755,15 +776,24 @@ class SampleGroup(SampleBase):
 
 
 def walk(
-    sample: SampleBase, topdown: bool = True
+    sample: SampleBase, topdown: bool = True, all: bool = False
 ) -> Generator[Tuple[SampleBase, Iterator[Sample], Iterator[SampleGroup]], None, None]:
-    """Walk a sample tree."""
-    s_iter = (s for s in sample.children if isinstance(s, Sample))
+    """Walk a sample tree.
+    
+    Args:
+        sample (SampleBase): Root sample
+        topdown (bool): parse tree from top
+        all (bool): Include hidden datasets
+    """
+    if all:
+        s_iter = (s for s in sample.children if isinstance(s, Sample))
+    else:
+        s_iter = (s for s in sample.children if isinstance(s, Sample) and not s.hidden)
     g_iter = (s for s in sample.children if isinstance(s, SampleGroup))
     if topdown:
         yield sample, s_iter, g_iter
     for s in sample.children:
-        yield from walk(s, topdown)
+        yield from walk(s, topdown, all)
     if not topdown:
         yield sample, s_iter, g_iter
 

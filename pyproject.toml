@@ -6,23 +6,24 @@ authors = ["Dietrich Liko <Dietrich.Liko@oeaw.ac.at>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-click = "^8.1.2"
-SQLAlchemy = "^1.4.36"
+click = "^8.1.3"
+SQLAlchemy = "^1.4.40"
 datasize = "^1.0.0"
 tomli = "^2.0.1"
 "ruamel.yaml" = "^0.17.21"
 dask = "^2022.5.0"
-distributed = "^2022.5.0"
-dask-jobqueue = "^0.7.3"
+distributed = "^2022.8.1"
+dask-jobqueue = "^0.8.0"
+correctionlib = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.0"
-black = "^22.3.0"
-flake8 = "^4.0.1"
-flake8-bugbear = "^22.1.11"
+pytest = "^7.1.2"
+black = "^22.6.0"
+flake8 = "^5.0.4"
+flake8-bugbear = "^22.8.23"
 flake8-docstrings = "^1.6.0"
-mypy = "^0.950"
-reorder-python-imports = "^3.1.0"
+mypy = "^0.971"
+reorder-python-imports = "^3.8.2"
 
 [tool.poetry.scripts]
 

@@ -83,6 +83,10 @@ def stackplot(  # noqa: C901
 
     if scale is not None:
         log.debug("Rescaling background by %.2f", scale)
+        histos_bkg1 = []
+        for h in histos_bkg:
+            histos_bkg1.append((h[0].Clone(), h[1], h[2]))
+        histos_bkg = histos_bkg1
         for h in histos_bkg:
             h[0].Scale(scale)
 
@@ -125,7 +129,7 @@ def stackplot(  # noqa: C901
 
     hs_bkg = ROOT.THStack("hs_bkg", "")
     if sort_background:
-        histos = sorted(histos_bkg, key=lambda x: x[0].Integral(), reverse=True)
+        histos = sorted(histos_bkg, key=lambda x: x[0].Integral())
     else:
         histos = histos_bkg
     for h in histos:
@@ -463,7 +467,9 @@ class SamplesPlotter:
                     histos_bkg,
                     histos_sig,
                     x_label=title,
-                    # ratio_plot=False,
+                    y_min=h1d.get("ymin_lin"),
+                    y_max=h1d.get("ymax_lin"),
+                    ratio_plot=h1d.get("ratio_plot", True),
                     scale=scale,
                 )
 
@@ -477,7 +483,9 @@ class SamplesPlotter:
                     histos_sig,
                     logy=True,
                     x_label=title,
-                    # ratio_plot=False,
+                    y_min=h1d.get("ymin_log"),
+                    y_max=h1d.get("ymax_log"),
+                    ratio_plot=h1d.get("ratio_plot", True),
                     scale=scale,
                 )
 

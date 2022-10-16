@@ -42,6 +42,47 @@ DictHisto = dict[str, Any]  # ROOT Histograms
 DictValue = dict[str, int | float]
 T = TypeVar("T")
 
+class WorkerPlugin(dd.WorkerPlugin):
+    """Initialise the Dask Worker.
+
+    Initialization of Logging, Configuration and ROOT on the
+    worker processes.
+    """
+
+    cfg: config.Configuration
+    log_level: int
+    _user_proxy: str
+    root_threads: int
+    root_includes: Sequence[str]
+
+    def __init__(self, root_threads: int, root_includes: Sequence[str]) -> None:
+        """Init WorkerPlugin."""
+        self.cfg = cfg
+        self.log_level = log.getEffectiveLevel()
+        self.root_threads = root_threads
+        self.root_includes = root_includes
+
+    def setup(self, worker: dd.Worker) -> None:
+        """Worker init."""
+        logging.basicConfig(
+            format="%(asctime)s - %(levelname)s -  %(message)s",
+            datefmt="%y-%m-%d %H:%M:%S",
+        )
+        for logger in (
+            logging.getLogger(name) for name in logging.root.manager.loggerDict
+        ):
+            logger.setLevel(self.log_level)
+
+        global cfg
+        cfg = self.cfg
+
+        ROOT.gROOT.SetBatch()
+        ROOT.PyConfig.IgnoreCommandLineOptions = True
+        ROOT.gErrorIgnoreLevel = ROOT.kError
+        ROOT.EnableImplicitMT(self.root_threads)
+        for root_incl in self.root_includes:
+            ROOT.gROOT.ProcessLine(f'#include "{root_incl}"')
+
 
 class Analysis(Generic[T], abc.ABC):
     """Base class for distributed analysis."""
@@ -178,14 +219,14 @@ class HistoAnalysis(Analysis):
                 bins = h1d.get("bins")
                 vbins = h1d.get("varbins")
                 if bins:
-                    log.debug(
-                        "Histo1d((%s,%s,%d,%f,%f),%s,%s)",
-                        name,
-                        title,
-                        *bins,
-                        var2,
-                        weight,
-                    )
+                    # log.debug(
+                    #     "Histo1d((%s,%s,%d,%f,%f),%s,%s)",
+                    #     name,
+                    #     title,
+                    #     *bins,
+                    #     var2,
+                    #     weight,
+                    # )
                     h = df2.Histo1D((name, title, *bins), var2, weight)
                 elif vbins:
                     h = df2.Histo1D(
@@ -195,10 +236,12 @@ class HistoAnalysis(Analysis):
                     log.error("Histogram %s has no valid binning.")
                 all_histos[name] = h
 
+        log.debug("Definition for %s done.", sample)
         start_time = time.time()
         all_histos_result = {k: v.GetValue() for k, v in all_histos.items()}
         all_values_result = {k: v.GetValue() for k, v in all_values.items()}
         all_values_result["time"] = time.time() - start_time
+        log.debug("Done for %s done.", sample)
 
         return all_histos_result, all_values_result
 
@@ -247,6 +290,11 @@ class HistoAnalysis(Analysis):
         all_values: dict[str, DictValue] = {}
         for f in dd.as_completed(future_to_sample.keys()):
             s = future_to_sample[f]
+            exc = f.exception()
+            if exc is not None:
+                log.error("Sample %s exception %s", str(s), exc)
+                log.exception(exc)
+                continue
             subdir = "_".join(s.path.parts[3:])
             ROOT.gDirectory.mkdir(subdir)
             ROOT.gDirectory.cd(subdir)
@@ -338,8 +386,15 @@ class Processor:
         self._client = dd.Client(self._cluster)
         self._client.register_worker_plugin(WorkerPlugin(root_threads, root_includes))
 
-    def run(self, sc: cache.SamplesCache, period: str, analysis: Analysis) -> None:
+    def run(
+        self,
+        sc: cache.SamplesCache,
+        period: str,
+        analysis: Analysis,
+        dataset: list[str],
+    ) -> None:
         """Loop on samples."""
+
         f_to_s: dict[dd.Future, model.SampleBase] = {}
         s_to_f: dict[model.SampleBase, dd.Future] = {}
         for parent, samples, sample_groups in sc.walk(period, topdown=False):
@@ -350,6 +405,8 @@ class Processor:
             for s in samples:
                 if len(s) == 0:
                     log.warning("Sample % s is empty.", s)
+                    continue
+                if not cache.filter_name(s.name, dataset):
                     continue
                 log.debug("Submitting map for sample %s", s)
                 f = self._client.submit(analysis.map, s)
@@ -374,52 +431,12 @@ class Processor:
                 s_to_f[parent] = f
 
         analysis.gather(f_to_s)
-        
+
     def __del__(self):
-        
+
+        log.warning("Client shutdown")
         self._client.shutdown()
-
-
-class WorkerPlugin(dd.WorkerPlugin):
-    """Initialise the Dask Worker.
-
-    Initialization of Logging, Configuration and ROOT on the
-    worker processes.
-    """
-
-    cfg: config.Configuration
-    log_level: int
-    _user_proxy: str
-    root_threads: int
-    root_includes: Sequence[str]
-
-    def __init__(self, root_threads: int, root_includes: Sequence[str]) -> None:
-        """Init WorkerPlugin."""
-        self.cfg = cfg
-        self.log_level = log.getEffectiveLevel()
-        self.root_threads = root_threads
-        self.root_includes = root_includes
-
-    def setup(self, worker: dd.Worker) -> None:
-        """Worker init."""
-        logging.basicConfig(
-            format="%(asctime)s - %(levelname)s -  %(message)s",
-            datefmt="%y-%m-%d %H:%M:%S",
-        )
-        for logger in (
-            logging.getLogger(name) for name in logging.root.manager.loggerDict
-        ):
-            logger.setLevel(self.log_level)
-
-        global cfg
-        cfg = self.cfg
-
-        ROOT.gROOT.SetBatch()
-        ROOT.PyConfig.IgnoreCommandLineOptions = True
-        ROOT.gErrorIgnoreLevel = ROOT.kError
-        ROOT.EnableImplicitMT(self.root_threads)
-        for root_incl in self.root_includes:
-            ROOT.gROOT.ProcessLine(f'#include "{root_incl}"')
+        del self._client
 
 
 def click_options():  # noqa:

@@ -7,4 +7,5 @@ dependencies:
   - poetry
   - mamba
   - cookiecutter
+  - conda-lock
   - git
