@@ -13,7 +13,7 @@ __all__ = ["get"]
 
 import pathlib
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import logging
 from typing import Any
 import shutil
@@ -102,10 +102,10 @@ class SamplesCache:
 class Site:
     """Site specific configurations."""
 
-    store_path: pathlib.Path = pathlib.Path("")
-    cache_path: pathlib.Path = pathlib.Path("")
-    local_path: pathlib.Path = pathlib.Path("")
-    log_path: pathlib.Path = pathlib.Path("")
+    store_path: pathlib.Path = pathlib.Path()
+    cache_path: pathlib.Path = pathlib.Path()
+    local_path: pathlib.Path = pathlib.Path()
+    log_path: pathlib.Path = pathlib.Path()
     local_url: str = ""
     global_url: str = ""
     stage: bool = True
@@ -118,9 +118,9 @@ class Site:
 class Configuration:
     """All configurations."""
 
-    bin: Binaries = Binaries()
-    sc: SamplesCache = SamplesCache()
-    site: Site = Site()
+    bin: Binaries = field(default_factory=Binaries)
+    sc: SamplesCache = field(default_factory=SamplesCache)
+    site: Site = field(default_factory=Site)
 
     def load(self, config_path: PathOrStr = "", site: str = "") -> None:
         """Load configuration data.

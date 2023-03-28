@@ -42,6 +42,7 @@ DictHisto = dict[str, Any]  # ROOT Histograms
 DictValue = dict[str, int | float]
 T = TypeVar("T")
 
+
 class WorkerPlugin(dd.WorkerPlugin):
     """Initialise the Dask Worker.
 
@@ -51,16 +52,13 @@ class WorkerPlugin(dd.WorkerPlugin):
 
     cfg: config.Configuration
     log_level: int
-    _user_proxy: str
     root_threads: int
-    root_includes: Sequence[str]
 
-    def __init__(self, root_threads: int, root_includes: Sequence[str]) -> None:
+    def __init__(self) -> None:
         """Init WorkerPlugin."""
         self.cfg = cfg
         self.log_level = log.getEffectiveLevel()
-        self.root_threads = root_threads
-        self.root_includes = root_includes
+        self.root_threads = _click_options.get("root-threads", 0)
 
     def setup(self, worker: dd.Worker) -> None:
         """Worker init."""
@@ -80,8 +78,6 @@ class WorkerPlugin(dd.WorkerPlugin):
         ROOT.PyConfig.IgnoreCommandLineOptions = True
         ROOT.gErrorIgnoreLevel = ROOT.kError
         ROOT.EnableImplicitMT(self.root_threads)
-        for root_incl in self.root_includes:
-            ROOT.gROOT.ProcessLine(f'#include "{root_incl}"')
 
 
 class Analysis(Generic[T], abc.ABC):
@@ -321,8 +317,7 @@ class Processor:
 
     def __init__(
         self,
-        root_includes: list[str],
-        root_threads: int = None,
+        worker_plugin: Any,
         workers: int = None,
         max_workers: int = None,
         batch: bool = None,
@@ -330,16 +325,10 @@ class Processor:
         """Initialse processor.
 
         Args:
-            root_includes (list[str]): Include files for ROOT
-            root_threads (int): ROOT implicit threads (0)
             workers (int): Number of worker processes (4)
             max_workers (int): Max number of workers in adaptive operation (0)
             batch (bool): Workers in batch (False)
         """
-        if root_threads is None:
-            root_threads = cast(
-                int, _click_options.get("root_threads", cfg.sc.root_threads)
-            )
         if workers is None:
             workers = cast(int, _click_options.get("workers", cfg.sc.workers))
         if max_workers is None:
@@ -384,7 +373,7 @@ class Processor:
             self._cluster.adapt(maximum=cast(int, max_workers))
 
         self._client = dd.Client(self._cluster)
-        self._client.register_worker_plugin(WorkerPlugin(root_threads, root_includes))
+        self._client.register_worker_plugin(worker_plugin)
 
     def run(
         self,
