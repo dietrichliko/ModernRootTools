@@ -1,0 +1,6 @@
+---
+- dataframe: main
+  Histo1D:
+    - name: HT
+      title: H_{T}
+      bins: [ 100, 0., 1000.]

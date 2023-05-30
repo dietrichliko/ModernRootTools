@@ -1,0 +1,21 @@
+# Configuration for MRTools in TOML format
+#
+[site]
+# For CLIP at HEPHY
+stage = true
+store_path = "/eos/vbc/experiments/cms"
+cache_path = "/scratch-cbe/users/${USER}/cache"
+samples_cache_path = "/groups/hephy/cms/${USER}/samples_cache"
+output = "/scratch-cbe/users/${USER}/output"
+local_url = "root://eos.grid.vbc.ac.at/"
+global_url = "root://xrootd-cms.infn.it/"
+
+[cache]
+voms_proxy_check = true
+voms_proxy_path = "~/.voms_proxy"
+
+[binaries]
+xrdcp = ""
+voms_proxy_info = ""
+voms_proxy_init = ""
+

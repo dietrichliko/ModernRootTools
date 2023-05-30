@@ -1,0 +1,1090 @@
+---
+name: Met_NanoNtuple_v10_scratch
+period: Run2016preVFP
+datasets:
+- name: MET
+  type: Data
+  datasets_from_fs:
+  - name: MET_Run2016B_ver2_HIPM_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/MET_Run2016B_ver2_HIPM_UL
+  - name: MET_Run2016C_HIPM_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/MET_Run2016C_HIPM_UL
+  - name: MET_Run2016D_HIPM_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/MET_Run2016D_HIPM_UL
+  - name: MET_Run2016E_HIPM_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/MET_Run2016E_HIPM_UL
+  - name: MET_Run2016F_HIPM_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/MET_Run2016F_HIPM_UL
+  title: Data
+- name: WJets
+  type: Background
+  attributes:
+    color: '8'
+  datasets_from_fs:
+  - name: WJetsToLNu_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WJetsToLNu_HT100to200
+  - name: WJetsToLNu_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WJetsToLNu_HT200to400
+  - name: WJetsToLNu_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WJetsToLNu_HT400to600
+  - name: WJetsToLNu_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WJetsToLNu_HT600to800
+  - name: WJetsToLNu_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WJetsToLNu_HT800to1200
+  - name: WJetsToLNu_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WJetsToLNu_HT1200to2500
+  - name: WJetsToLNu_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WJetsToLNu_HT2500toInf
+  title: W + Jets
+- name: DYJets
+  type: Background
+  attributes:
+    color: kMagenta-6
+  datasets:
+  - name: DYJets_M50
+    type: Background
+    datasets_from_fs:
+    - name: DYJetsToLL_M50_HT70to100
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M50_HT70to100
+    - name: DYJetsToLL_M50_HT100to200
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M50_HT100to200
+    - name: DYJetsToLL_M50_HT200to400
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M50_HT200to400
+    - name: DYJetsToLL_M50_HT400to600
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M50_HT400to600
+    - name: DYJetsToLL_M50_HT600to800
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M50_HT600to800
+    - name: DYJetsToLL_M50_HT800to1200
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M50_HT800to1200
+    - name: DYJetsToLL_M50_HT1200to2500
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M50_HT1200to2500
+    - name: DYJetsToLL_M50_HT2500toInf
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M50_HT2500toInf
+  - name: DYJets_M4to50
+    type: Background
+    datasets_from_fs:
+    - name: DYJetsToLL_M4to50_HT200to400
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M4to50_HT200to400
+    - name: DYJetsToLL_M4to50_HT600toInf
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToLL_M4to50_HT600toInf
+  title: Z/#gamma_{*} + Jets
+- name: DYINV
+  type: Background
+  attributes:
+    color: kOrange-3
+  datasets_from_fs:
+  - name: DYJetsToNuNu_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToNuNu_HT100to200
+  - name: DYJetsToNuNu_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToNuNu_HT200to400
+  - name: DYJetsToNuNu_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToNuNu_HT400to600
+  - name: DYJetsToNuNu_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToNuNu_HT600to800
+  - name: DYJetsToNuNu_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToNuNu_HT800to1200
+  - name: DYJetsToNuNu_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToNuNu_HT1200to2500
+  - name: DYJetsToNuNu_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/DYJetsToNuNu_HT2500toInf
+  title: 'Z/#gamma_{*} #rightarrow #nu#bar{#nu} + Jets'
+- name: TT
+  type: Background
+  attributes:
+    color: kAzure+1
+  datasets_from_fs:
+  - name: TTLep_pow_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TTLep_pow_CP5
+  - name: TTSingleLep_pow_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TTSingleLep_pow_CP5
+  title: t#bar{t}
+- name: T
+  type: Background
+  attributes:
+    color: kAzure+1
+  datasets_from_fs:
+  - name: T_tch_pow
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/T_tch_pow
+  - name: TBar_tch_pow
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TBar_tch_pow
+  - name: T_tWch_ext
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/T_tWch_ext
+  - name: TBar_tWch_ext
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TBar_tWch_ext
+  title: Single t
+- name: TTX
+  type: Background
+  attributes:
+    color: kAzure-7
+  datasets_from_fs:
+  - name: TTWToLNu_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TTWToLNu_CP5
+  - name: TTWToQQ
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TTWToQQ
+  - name: TTGJets
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TTGJets
+  - name: TTW_LO
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TTW_LO
+  - name: TTZ_LO
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/TTZ_LO
+  title: 't#bar{t} #rightarrow X'
+- name: VV
+  type: Background
+  datasets:
+  - name: WW
+    type: Background
+    datasets_from_fs:
+    - name: WWTo2L2Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WWTo2L2Nu
+    - name: WWTo1L1Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WWTo1L1Nu2Q
+  - name: ZZ
+    type: Background
+    datasets_from_fs:
+    - name: ZZTo2L2Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/ZZTo2L2Nu
+    - name: ZZTo2Q2L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/ZZTo2Q2L
+    - name: ZZTo2Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/ZZTo2Nu2Q
+    - name: ZZTo4L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/ZZTo4L
+  - name: WZ
+    type: Background
+    datasets_from_fs:
+    - name: WZTo3LNu_amcatnlo
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WZTo3LNu_amcatnlo
+    - name: WZTo1L3Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WZTo1L3Nu
+    - name: WZTo1L1Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WZTo1L1Nu2Q
+    - name: WZTo2Q2L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/WZTo2Q2L
+  title: MultiBoson
+- name: QCD
+  type: Background
+  attributes:
+    color: kMagenta+3
+  datasets:
+  - name: QCD_HT50to100
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT50to100
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT50to100
+    - name: QCD_HT50to100_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT50to100_madgraph
+  - name: QCD_HT100to200
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT100to200
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT100to200
+    - name: QCD_HT100to200_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT100to200_madgraph
+  - name: QCD_HT200to300
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT200to300_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT200to300_madgraph
+  - name: QCD_HT300to500
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT300to500
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT300to500
+    - name: QCD_HT300to500_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT300to500_madgraph
+  - name: QCD_HT500to700
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT500to700
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT500to700
+    - name: QCD_HT500to700_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT500to700_madgraph
+  - name: QCD_HT700to1000
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT700to1000
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT700to1000
+    - name: QCD_HT700to1000_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT700to1000_madgraph
+  - name: QCD_HT1000to1500
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT1000to1500
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT1000to1500
+    - name: QCD_HT1000to1500_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT1000to1500_madgraph
+  - name: QCD_HT1500to2000
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT1500to2000
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT1500to2000
+    - name: QCD_HT1500to2000_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT1500to2000_madgraph
+  - name: QCD_HT2000toInf
+    type: Background
+    datasets_from_fs:
+    - name: QCD_HT2000toInf
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT2000toInf
+    - name: QCD_HT2000toInf_madgraph
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/QCD_HT2000toInf_madgraph
+  title: QCD
+datasets_from_fs:
+- name: SMS_T2tt_mStop_500_mLSP_420
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_420
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}} = 420
+- name: SMS_T2tt_mStop_500_mLSP_450
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_450
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}} = 420
+- name: SMS_T2tt_mStop_500_mLSP_470
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16APVv9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_470
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}} = 420
+---
+name: Met_NanoNtuple_v10_scratch
+period: Run2016postVFP
+datasets:
+- name: MET
+  type: Data
+  datasets_from_fs:
+  - name: MET_Run2016F_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/MET_Run2016F_UL
+  - name: MET_Run2016G_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/MET_Run2016G_UL
+  - name: MET_Run2016H_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/MET_Run2016H_UL
+  title: Data
+- name: WJets
+  type: Background
+  attributes:
+    color: '8'
+  datasets_from_fs:
+  - name: WJetsToLNu_HT70to100
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WJetsToLNu_HT70to100
+  - name: WJetsToLNu_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WJetsToLNu_HT100to200
+  - name: WJetsToLNu_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WJetsToLNu_HT200to400
+  - name: WJetsToLNu_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WJetsToLNu_HT400to600
+  - name: WJetsToLNu_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WJetsToLNu_HT600to800
+  - name: WJetsToLNu_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WJetsToLNu_HT800to1200
+  - name: WJetsToLNu_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WJetsToLNu_HT1200to2500
+  - name: WJetsToLNu_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WJetsToLNu_HT2500toInf
+  title: W + Jets
+- name: DYJets
+  type: Background
+  attributes:
+    color: kMagenta-6
+  datasets:
+  - name: DYJets_M50
+    type: Background
+    datasets_from_fs:
+    - name: DYJetsToLL_M50_HT70to100
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M50_HT70to100
+    - name: DYJetsToLL_M50_HT100to200
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M50_HT100to200
+    - name: DYJetsToLL_M50_HT200to400
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M50_HT200to400
+    - name: DYJetsToLL_M50_HT400to600
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M50_HT400to600
+    - name: DYJetsToLL_M50_HT600to800
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M50_HT600to800
+    - name: DYJetsToLL_M50_HT800to1200
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M50_HT800to1200
+    - name: DYJetsToLL_M50_HT1200to2500
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M50_HT1200to2500
+    - name: DYJetsToLL_M50_HT2500toInf
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M50_HT2500toInf
+  - name: DYJets_M4to50
+    type: Background
+    datasets_from_fs:
+    - name: DYJetsToLL_M4to50_HT400to600
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M4to50_HT400to600
+    - name: DYJetsToLL_M4to50_HT600toInf
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToLL_M4to50_HT600toInf
+  title: Z/#gamma_{*} + Jets
+- name: DYINV
+  type: Background
+  attributes:
+    color: kOrange-3
+  datasets_from_fs:
+  - name: DYJetsToNuNu_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToNuNu_HT100to200
+  - name: DYJetsToNuNu_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToNuNu_HT200to400
+  - name: DYJetsToNuNu_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToNuNu_HT400to600
+  - name: DYJetsToNuNu_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToNuNu_HT600to800
+  - name: DYJetsToNuNu_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToNuNu_HT800to1200
+  - name: DYJetsToNuNu_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToNuNu_HT1200to2500
+  - name: DYJetsToNuNu_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/DYJetsToNuNu_HT2500toInf
+  title: 'Z/#gamma_{*} #rightarrow #nu#bar{#nu} + Jets'
+- name: TT
+  type: Background
+  attributes:
+    color: kAzure+1
+  datasets_from_fs:
+  - name: TTLep_pow_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TTLep_pow_CP5
+  - name: TTSingleLep_pow_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TTSingleLep_pow_CP5
+  title: t#bar{t}
+- name: T
+  type: Background
+  attributes:
+    color: kAzure+1
+  datasets_from_fs:
+  - name: T_tch_pow
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/T_tch_pow
+  - name: TBar_tch_pow
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TBar_tch_pow
+  - name: T_tWch_ext
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/T_tWch_ext
+  - name: TBar_tWch_ext
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TBar_tWch_ext
+  title: Single t
+- name: TTX
+  type: Background
+  attributes:
+    color: kAzure-7
+  datasets_from_fs:
+  - name: TTWToLNu_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TTWToLNu_CP5
+  - name: TTWToQQ
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TTWToQQ
+  - name: TTGJets
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TTGJets
+  - name: TTW_LO
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TTW_LO
+  - name: TTZ_LO
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/TTZ_LO
+  title: 't#bar{t} #rightarrow X'
+- name: VV
+  type: Background
+  datasets:
+  - name: WW
+    type: Background
+    datasets_from_fs:
+    - name: WWTo2L2Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WWTo2L2Nu
+    - name: WWTo1L1Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WWTo1L1Nu2Q
+  - name: ZZ
+    type: Background
+    datasets_from_fs:
+    - name: ZZTo2L2Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/ZZTo2L2Nu
+    - name: ZZTo2Q2L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/ZZTo2Q2L
+    - name: ZZTo2Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/ZZTo2Nu2Q
+    - name: ZZTo4L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/ZZTo4L
+  - name: WZ
+    type: Background
+    datasets_from_fs:
+    - name: WZTo3LNu_amcatnlo
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WZTo3LNu_amcatnlo
+    - name: WZTo1L3Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WZTo1L3Nu
+    - name: WZTo1L1Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WZTo1L1Nu2Q
+    - name: WZTo2Q2L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/WZTo2Q2L
+  title: MultiBoson
+- name: QCD
+  type: Background
+  attributes:
+    color: kMagenta+3
+  datasets_from_fs:
+  - name: QCD_HT50to100
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT50to100
+  - name: QCD_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT100to200
+  - name: QCD_HT100to200_madgraph
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT100to200_madgraph
+  - name: QCD_HT200to300
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT200to300
+  - name: QCD_HT200to300_madgraph
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT200to300_madgraph
+  - name: QCD_HT300to500_madgraph
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT300to500_madgraph
+  - name: QCD_HT500to700_madgraph
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT500to700_madgraph
+  - name: QCD_HT700to1000_madgraph
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT700to1000_madgraph
+  - name: QCD_HT1000to1500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT1000to1500
+  - name: QCD_HT1000to1500_madgraph
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT1000to1500_madgraph
+  - name: QCD_HT1500to2000
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT1500to2000
+  - name: QCD_HT1500to2000_madgraph
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT1500to2000_madgraph
+  - name: QCD_HT2000toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT2000toInf
+  - name: QCD_HT2000toInf_madgraph
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/QCD_HT2000toInf_madgraph
+  title: QCD
+datasets_from_fs:
+- name: SMS_T2tt_mStop_500_mLSP_420
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_420
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=420
+- name: SMS_T2tt_mStop_500_mLSP_450
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_450
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=420
+- name: SMS_T2tt_mStop_500_mLSP_470
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_470
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=470
+- name: SMS_T2tt_LL_mStop_400_mLSP_380
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/SMS_T2tt_LL_mStop_400_mLSP_380
+  title: m_{#tilde{t}}=400, m_{#tilde{#chi}}=380
+- name: SMS_T2tt_LL_mStop_350_mLSP_335
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/SMS_T2tt_LL_mStop_350_mLSP_335
+  title: m_{#tilde{t}}=350, m_{#tilde{#chi}}=335
+- name: SMS_T2tt_LL_mStop_300_mLSP_290
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL16v9_nano_v10/Met/SMS_T2tt_LL_mStop_300_mLSP_290
+  title: m_{#tilde{t}}=300, m_{#tilde{#chi}}=290
+---
+name: Met_NanoNtuple_v10_scratch
+period: Run2017
+datasets:
+- name: MET
+  type: Data
+  datasets_from_fs:
+  - name: MET_Run2017B_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/MET_Run2017B_UL
+  - name: MET_Run2017C_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/MET_Run2017C_UL
+  - name: MET_Run2017D_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/MET_Run2017D_UL
+  - name: MET_Run2017E_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/MET_Run2017E_UL
+  - name: MET_Run2017F_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/MET_Run2017F_UL
+  title: Data
+- name: WJets
+  type: Background
+  attributes:
+    color: '8'
+  datasets_from_fs:
+  - name: WJetsToLNu_HT70to100
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WJetsToLNu_HT70to100
+  - name: WJetsToLNu_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WJetsToLNu_HT100to200
+  - name: WJetsToLNu_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WJetsToLNu_HT200to400
+  - name: WJetsToLNu_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WJetsToLNu_HT400to600
+  - name: WJetsToLNu_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WJetsToLNu_HT600to800
+  - name: WJetsToLNu_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WJetsToLNu_HT800to1200
+  - name: WJetsToLNu_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WJetsToLNu_HT1200to2500
+  - name: WJetsToLNu_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WJetsToLNu_HT2500toInf
+  title: W + Jets
+- name: DYJets
+  type: Background
+  attributes:
+    color: kMagenta-6
+  datasets:
+  - name: DYJets_M50
+    type: Background
+    datasets_from_fs:
+    - name: DYJetsToLL_M50_HT70to100
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M50_HT70to100
+    - name: DYJetsToLL_M50_HT100to200
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M50_HT100to200
+    - name: DYJetsToLL_M50_HT200to400
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M50_HT200to400
+    - name: DYJetsToLL_M50_HT400to600
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M50_HT400to600
+    - name: DYJetsToLL_M50_HT600to800
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M50_HT600to800
+    - name: DYJetsToLL_M50_HT800to1200
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M50_HT800to1200
+    - name: DYJetsToLL_M50_HT1200to2500
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M50_HT1200to2500
+    - name: DYJetsToLL_M50_HT2500toInf
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M50_HT2500toInf
+  - name: DYJets_M4to50
+    type: Background
+    datasets_from_fs:
+    - name: DYJetsToLL_M4to50_HT100to200
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToLL_M4to50_HT100to200
+  title: Z/#gamma_{*} + Jets
+- name: DYINV
+  type: Background
+  attributes:
+    color: kOrange-3
+  datasets_from_fs:
+  - name: DYJetsToNuNu_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToNuNu_HT100to200
+  - name: DYJetsToNuNu_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToNuNu_HT200to400
+  - name: DYJetsToNuNu_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToNuNu_HT400to600
+  - name: DYJetsToNuNu_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToNuNu_HT600to800
+  - name: DYJetsToNuNu_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToNuNu_HT800to1200
+  - name: DYJetsToNuNu_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToNuNu_HT1200to2500
+  - name: DYJetsToNuNu_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/DYJetsToNuNu_HT2500toInf
+  title: 'Z/#gamma_{*} #rightarrow #nu#bar{#nu} + Jets'
+- name: TT
+  type: Background
+  attributes:
+    color: kAzure+1
+  datasets_from_fs:
+  - name: TTLep_pow_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TTLep_pow_CP5
+  - name: TTSingleLep_pow_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TTSingleLep_pow_CP5
+  title: t#bar{t}
+- name: T
+  type: Background
+  attributes:
+    color: kAzure+1
+  datasets_from_fs:
+  - name: T_tch_pow
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/T_tch_pow
+  - name: TBar_tch_pow
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TBar_tch_pow
+  - name: T_tWch_ext
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/T_tWch_ext
+  - name: TBar_tWch_ext
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TBar_tWch_ext
+  title: Single t
+- name: TTX
+  type: Background
+  attributes:
+    color: kAzure-7
+  datasets_from_fs:
+  - name: TTWToLNu_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TTWToLNu_CP5
+  - name: TTWToQQ
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TTWToQQ
+  - name: TTW_LO
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TTW_LO
+  - name: TTZ_LO
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TTZ_LO
+  - name: TTGJets
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/TTGJets
+  title: 't#bar{t} #rightarrow X'
+- name: VV
+  type: Background
+  datasets:
+  - name: WW
+    type: Background
+    datasets_from_fs:
+    - name: WWTo2L2Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WWTo2L2Nu
+    - name: WWTo1L1Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WWTo1L1Nu2Q
+  - name: ZZ
+    type: Background
+    datasets_from_fs:
+    - name: ZZTo2L2Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/ZZTo2L2Nu
+    - name: ZZTo2Q2L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/ZZTo2Q2L
+    - name: ZZTo2Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/ZZTo2Nu2Q
+    - name: ZZTo4L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/ZZTo4L
+  - name: WZ
+    type: Background
+    datasets_from_fs:
+    - name: WZTo3LNu_amcatnlo
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WZTo3LNu_amcatnlo
+    - name: WZTo1L3Nu
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WZTo1L3Nu
+    - name: WZTo1L1Nu2Q
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WZTo1L1Nu2Q
+    - name: WZTo2Q2L
+      type: Background
+      directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/WZTo2Q2L
+  title: MultiBoson
+- name: QCD
+  type: Background
+  attributes:
+    color: kMagenta+3
+  datasets_from_fs:
+  - name: QCD_HT50to100
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT50to100
+  - name: QCD_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT100to200
+  - name: QCD_HT200to300
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT200to300
+  - name: QCD_HT300to500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT300to500
+  - name: QCD_HT500to700
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT500to700
+  - name: QCD_HT700to1000
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT700to1000
+  - name: QCD_HT1000to1500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT1000to1500
+  - name: QCD_HT1500to2000
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT1500to2000
+  - name: QCD_HT2000toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/QCD_HT2000toInf
+  title: QCD
+datasets_from_fs:
+- name: SMS_T2tt_mStop_500_mLSP_420
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_420
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=420
+- name: SMS_T2tt_mStop_500_mLSP_450
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_450
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=450
+- name: SMS_T2tt_mStop_500_mLSP_470
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_470
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=470
+- name: SMS_T2tt_LL_mStop_400_mLSP_380
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/SMS_T2tt_LL_mStop_400_mLSP_380
+  title: m_{#tilde{t}}=400, m_{#tilde{#chi}}=380
+- name: SMS_T2tt_LL_mStop_350_mLSP_335
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/SMS_T2tt_LL_mStop_350_mLSP_335
+  title: m_{#tilde{t}}=350, m_{#tilde{#chi}}=335
+- name: SMS_T2tt_LL_mStop_300_mLSP_290
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL17v9_nano_v10/Met/SMS_T2tt_LL_mStop_300_mLSP_290
+  title: m_{#tilde{t}}=300, m_{#tilde{#chi}}=290
+---
+name: Met_NanoNtuple_v10_scratch
+period: Run2018
+datasets:
+- name: MET
+  type: Data
+  datasets_from_fs:
+  - name: MET_Run2018A_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/MET_Run2018A_UL
+  - name: MET_Run2018B_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/MET_Run2018B_UL
+  - name: MET_Run2018C_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/MET_Run2018C_UL
+  - name: MET_Run2018D_UL
+    type: Data
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/MET_Run2018D_UL
+  title: Data
+- name: WJets
+  type: Background
+  attributes:
+    color: '8'
+  datasets_from_fs:
+  - name: WJetsToLNu_HT70to100
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WJetsToLNu_HT70to100
+  - name: WJetsToLNu_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WJetsToLNu_HT100to200
+  - name: WJetsToLNu_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WJetsToLNu_HT200to400
+  - name: WJetsToLNu_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WJetsToLNu_HT400to600
+  - name: WJetsToLNu_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WJetsToLNu_HT600to800
+  - name: WJetsToLNu_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WJetsToLNu_HT800to1200
+  - name: WJetsToLNu_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WJetsToLNu_HT1200to2500
+  - name: WJetsToLNu_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WJetsToLNu_HT2500toInf
+  title: W + Jets
+- name: DYJets
+  type: Background
+  attributes:
+    color: kMagenta-6
+  datasets_from_fs:
+  - name: DYJetsToLL_M50_HT70to100
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToLL_M50_HT70to100
+  - name: DYJetsToLL_M50_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToLL_M50_HT100to200
+  - name: DYJetsToLL_M50_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToLL_M50_HT200to400
+  - name: DYJetsToLL_M50_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToLL_M50_HT400to600
+  - name: DYJetsToLL_M50_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToLL_M50_HT600to800
+  - name: DYJetsToLL_M50_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToLL_M50_HT800to1200
+  - name: DYJetsToLL_M50_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToLL_M50_HT1200to2500
+  - name: DYJetsToLL_M50_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToLL_M50_HT2500toInf
+  title: Z/#gamma_{*} + Jets
+- name: DYINV
+  type: Background
+  attributes:
+    color: kOrange-3
+  datasets_from_fs:
+  - name: DYJetsToNuNu_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToNuNu_HT100to200
+  - name: DYJetsToNuNu_HT200to400
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToNuNu_HT200to400
+  - name: DYJetsToNuNu_HT400to600
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToNuNu_HT400to600
+  - name: DYJetsToNuNu_HT600to800
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToNuNu_HT600to800
+  - name: DYJetsToNuNu_HT800to1200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToNuNu_HT800to1200
+  - name: DYJetsToNuNu_HT1200to2500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToNuNu_HT1200to2500
+  - name: DYJetsToNuNu_HT2500toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/DYJetsToNuNu_HT2500toInf
+  title: 'Z/#gamma_{*} #rightarrow #nu#bar{#nu} + Jets'
+- name: TT
+  type: Background
+  attributes:
+    color: kAzure+1
+  datasets_from_fs:
+  - name: TTLep_pow_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/TTLep_pow_CP5
+  - name: TTSingleLep_pow_CP5
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/TTSingleLep_pow_CP5
+  title: t#bar{t}
+- name: T
+  type: Background
+  attributes:
+    color: kAzure+1
+  datasets_from_fs:
+  - name: T_tch_pow
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/T_tch_pow
+  - name: TBar_tch_pow
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/TBar_tch_pow
+  - name: T_tWch_ext
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/T_tWch_ext
+  - name: TBar_tWch_ext
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/TBar_tWch_ext
+  title: Single t
+- name: TTX
+  type: Background
+  attributes:
+    color: kAzure-7
+  datasets_from_fs:
+  - name: TTWToQQ
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/TTWToQQ
+  - name: TTW_LO
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/TTW_LO
+  - name: TTZ_LO
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/TTZ_LO
+  - name: TTGJets
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/TTGJets
+  title: 't#bar{t} #rightarrow X'
+- name: VV
+  type: Background
+  datasets_from_fs:
+  - name: WW
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WW
+  - name: ZZTo2L2Nu
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/ZZTo2L2Nu
+  - name: ZZTo2Nu2Q
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/ZZTo2Nu2Q
+  - name: ZZTo2Q2L
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/ZZTo2Q2L
+  - name: ZZTo4L
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/ZZTo4L
+  - name: WZTo3LNu_amcatnlo
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WZTo3LNu_amcatnlo
+  - name: WZTo1L1Nu2Q
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/WZTo1L1Nu2Q
+  title: MultiBoson
+- name: QCD
+  type: Background
+  attributes:
+    color: kMagenta+3
+  datasets_from_fs:
+  - name: QCD_HT50to100
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT50to100
+  - name: QCD_HT100to200
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT100to200
+  - name: QCD_HT200to300
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT200to300
+  - name: QCD_HT300to500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT300to500
+  - name: QCD_HT500to700
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT500to700
+  - name: QCD_HT700to1000
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT700to1000
+  - name: QCD_HT1000to1500
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT1000to1500
+  - name: QCD_HT1500to2000
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT1500to2000
+  - name: QCD_HT2000toInf
+    type: Background
+    directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/QCD_HT2000toInf
+  title: QCD
+datasets_from_fs:
+- name: SMS_T2tt_mStop_500_mLSP_420
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_420
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=420
+- name: SMS_T2tt_mStop_500_mLSP_450
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_450
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=450
+- name: SMS_T2tt_mStop_500_mLSP_470
+  type: Signal
+  directory: /scratch-cbe/users/dietrich.liko/StopsCompressed/nanoTuples/compstops_UL18v9_nano_v10/Met/SMS_T2tt_mStop_500_mLSP_470
+  title: m_{#tilde{t}}=500, m_{#tilde{#chi}}=470
