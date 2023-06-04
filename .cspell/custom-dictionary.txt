@@ -9,12 +9,14 @@ dask
 dasname
 Dataframe
 dataframes
+dset
 fwalk
 getxattr
 HEPHY
 Histo
 histos
 hstack
+jobqueue
 levelname
 Logx
 mrtools
@@ -23,9 +25,12 @@ nevents
 nopbar
 nostack
 Ntuple
+prun
 pyroot
 ruamel
+SLURM
 Stageing
 topdown
 voms
+walltime
 xrdcp

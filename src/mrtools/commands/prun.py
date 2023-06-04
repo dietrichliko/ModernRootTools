@@ -14,6 +14,7 @@ from mrtools import analysis
 from mrtools import cache
 from mrtools import exceptions
 from mrtools import config
+from mrtools import distributed
 
 log = logging.getLogger(".".join(__name__.split(".")[:2]))
 cfg = config.get()
@@ -26,11 +27,10 @@ cfg = config.get()
     type=click.Path(dir_okay=False, exists=True, readable=True, path_type=pathlib.Path),
     nargs=1,
 )
-@click.argument("extra", nargs=-1, type=click.UNPROCESSED)
+@click.argument("extra", metavar="EXTRA OPTIONS", nargs=-1, type=click.UNPROCESSED)
 @click.option(
     "-p",
     "--period",
-    metavar="PERIOD",
     default=[],
     multiple=True,
     help="Run periods [default: all periods]",
@@ -38,7 +38,6 @@ cfg = config.get()
 @click.option(
     "-f",
     "--dataset-file",
-    metavar="YAML",
     default=[],
     multiple=True,
     type=click.Path(dir_okay=False, exists=True, readable=True, path_type=pathlib.Path),
@@ -56,7 +55,6 @@ cfg = config.get()
 @click.option(
     "-h",
     "--histos-file",
-    metavar="YAML",
     default=[],
     multiple=True,
     type=click.Path(dir_okay=False, exists=True, readable=True, path_type=pathlib.Path),
@@ -67,7 +65,7 @@ cfg = config.get()
     "--output",
     default=None,
     type=click.Path(file_okay=False, writable=True, path_type=pathlib.Path),
-    help="Output directory [default: from config]",
+    help="Output directory [default from config]",
 )
 @click.option(
     "-n",
@@ -98,7 +96,29 @@ cfg = config.get()
     help="Max number of files per sample to process, 0 for all files",
     show_default=True,
 )
-def run(
+@click.option(
+    "--workers",
+    metavar="NR",
+    type=click.IntRange(1),
+    default=4,
+    help="Number of worker processes",
+    show_default=True,
+)
+@click.option(
+    "--max-workers",
+    metavar="MAX",
+    type=click.IntRange(0),
+    default=0,
+    help="Adaptive scaling up MAX workers, 0 for no scaling",
+    show_default=True,
+)
+@click.option(
+    "--batch/--no-batch",
+    default=False,
+    help="Run workers on the batch system",
+    show_default=True,
+)
+def prun(  # noqa: C901
     user_file: pathlib.Path,
     extra: Sequence[str],
     period: list[str],
@@ -110,8 +130,11 @@ def run(
     root_threads: int,
     root_mt: bool,
     max_files: int,
+    workers: int,
+    max_workers: int,
+    batch: bool,
 ) -> None:
-    """Run the analysis defined in python file ANALYSIS."""
+    """Run the analysis in parallel."""
     module = analysis.load_module_from_file(user_file)
     module_dir = pathlib.Path(cast(str, module.__file__)).parent
 
@@ -148,10 +171,17 @@ def run(
         histograms += analysis.load_histos(hf)
 
     rt = root_threads if root_mt else -1
-    proc = analysis.Processor(analyzer, histograms, rt, max_files)
+    proc = distributed.Processor(
+        analyzer, histograms, rt, max_files, workers, max_workers, batch
+    )
     for p in period:
         log.info("Analyzing period %s", p)
+        if dataset_name:
+            samples_iter = analysis.find_datasets(dc, p, dataset_name)
+        else:
+            samples_iter = dc.list(p)
+
         proc.run(
-            analysis.find_datasets(dc, p, dataset_name),
+            samples_iter,
             output / name.format(name=user_file.stem, period=p),
         )

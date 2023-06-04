@@ -1,0 +1,35 @@
+name: Docs
+on:
+  push:
+    tags: '*'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    - name: Install sphinx
+      run: pip install sphinx sphinxcontrib-napoleon
+    - name: Build documentation
+      run: |
+        mkdir gh-pages
+        touch gh-pages/.nojekyll
+        cd docs/
+        sphinx-build -b html . _build
+        cp -r _build/* ../gh-pages/
+    - name: Deploy
+      if: ${{ github.event_name == 'push' }}
+      uses: JamesIves/github-pages-deploy-action@4
+      with:
+        branch: gh-pages
+        folder: gh-pages

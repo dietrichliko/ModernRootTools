@@ -18,6 +18,7 @@ import ROOT
 import ruamel.yaml as yaml
 
 from mrtools import datasets
+from mrtools import cache
 
 RDataFrame = Any
 TH1 = Any
@@ -106,6 +107,14 @@ class Analysis:
                 name = h1d["name"]
                 title = h1d.get("title", name)
                 var = h1d.get("var", name)
+                df1 = dataframes[df_name]
+                if not var.isidentifier():
+                    log.debug('Define("%s", "%s")', name, var)
+                    df2 = df1.Define(name, var)
+                    var2 = name
+                else:
+                    df2 = df1
+                    var2 = var
                 weight = h1d.get("weight", df_weight)
                 if "bins" in h1d:
                     nbins, xmin, xmax = h1d["bins"]
@@ -116,11 +125,11 @@ class Analysis:
                         nbins,
                         xmin,
                         xmax,
-                        var,
+                        var2,
                         weight,
                     )
-                    histos[name] = dataframes[df_name].Histo1D(
-                        (name, title, nbins, xmin, xmax), var, weight
+                    histos[name] = df2.Histo1D(
+                        (name, title, nbins, xmin, xmax), var2, weight
                     )
 
         counters = {f"{n}_events": df.Count() for n, df in dataframes.items()}
@@ -129,20 +138,16 @@ class Analysis:
         return histos, counters
 
     def reduce(
-        self,
-        sample: datasets.Dataset,
-        histos: list[dict[str, Any]],
-        counters: list[dict[str, Any]],
-    ) -> tuple[dict[str, Any], dict[str, Any]]:
-        log.debug("Reducing %s ...", sample)
-        merged_histos: dict[str, Any] = {n: h.Clone() for n, h in histos[0].items()}
-        for hs in histos[1:]:
-            for n, h in hs.items():
+        self, name: str, results: list[tuple[dict[str, TH1], dict[str, int | float]]]
+    ) -> tuple[dict[str, TH1], dict[str, Any]]:
+        log.debug("Reduce %s ..", name)
+        histos, counters = results[0]
+        merged_histos: dict[str, Any] = {n: h.Clone() for n, h in histos.items()}
+        merged_counters = counters.copy()
+        for histos, counters in results[1:]:
+            for n, h in histos.items():
                 merged_histos[n] = merged_histos[n] + h
-
-        merged_counters = counters[0].copy()
-        for cs in counters[1:]:
-            for n, c in cs.items():
+            for n, c in counters.items():
                 if n.startswith("max_"):
                     merged_counters[n] = max(merged_counters[n], c)
                 elif n.startswith("min_"):
@@ -178,52 +183,49 @@ class Processor:
         the_datasets: Iterable[datasets.Dataset],
         output: pathlib.Path,
     ) -> None:
-        all_histos: dict[str, dict[str, Any]] = {}
-        all_counters: dict[str, dict[str, Any]] = {}
+        all_results: dict[str, tuple[dict[str, TH1], dict[str, int | float]]] = {}
         for dataset in the_datasets:
             log.info("Dataset %s", dataset)
             if isinstance(dataset, datasets.DatasetFrom):
-                hs, cs = self.analysis.map(
+                all_results[str(dataset)] = self.analysis.map(
                     (dataset.tree_name, [f.url() for f in dataset]),
                     dataset.name,
                     dataset.type,
                     dataset.period,
                 )
-                all_histos[str(dataset)] = hs
-                all_counters[str(dataset)] = cs
             else:
                 for parent, groups, children in dataset.walk(topdown=False):
-                    histos: list[dict[str, Any]] = []
-                    counters: list[dict[str, Any]] = []
-                    for ds in children:
-                        hs, cs = self.analysis.map(
-                            (ds.tree_name, [f.url() for f in dataset]),
-                            ds.name,
-                            ds.type,
-                            ds.period,
+                    results: list[tuple[dict[str, TH1], dict[str, int | float]]] = []
+                    for dset in children:
+                        print("Analysis period", dset.period)
+                        r = self.analysis.map(
+                            (dset.tree_name, [f.url() for f in dataset]),
+                            dset.name,
+                            dset.type,
+                            dset.period,
                         )
-                        histos.append(hs)
-                        counters.append(cs)
-                        all_histos[str(ds)] = hs
-                        all_counters[str(ds)] = cs
-                    for ds_name in map(str, groups):
-                        histos.append(all_histos[ds_name])
-                        counters.append(all_counters[ds_name])
-                    hs, cs = self.analysis.reduce(parent, histos, counters)
-                    all_histos[str(parent)] = hs
-                    all_counters[str(parent)] = cs
+                        results.append(r)
+                        all_results[str(dset)] = r
+                    for d in groups:
+                        results.append(all_results[str(d)])
+                    all_results[str(parent)] = self.analysis.reduce(
+                        str(parent), results
+                    )
         root_file = output.with_suffix(".root")
         log.info("Writing %s ...", root_file)
         out_root = ROOT.TFile.Open(str(root_file), "RECREATE")
-        for sample_path, sample_histos in all_histos.items():
-            subdir = "_".join(sample_path.split("/")[3:])
+        for path, (histos, _) in all_results.items():
+            subdir = "_".join(path.split("/")[3:])
             ROOT.gDirectory.mkdir(subdir)
             ROOT.gDirectory.cd(subdir)
-            for h in sample_histos.values():
+            for h in histos.values():
                 h.Write()
             ROOT.gDirectory.cd("/")
         out_root.Close()
 
+        all_counters: dict[str, dict[str, int | float]] = {}
+        for path, (_, counters) in all_results.items():
+            all_counters[path] = counters
         json_file = output.with_suffix(".json.gz")
         log.info("Writing %s ...", json_file)
         with gzip.open(json_file, mode="wt", encoding="UTF-8") as out_json:
@@ -287,15 +289,21 @@ def get_list_from_module(module: types.ModuleType, name: str) -> list[str]:
     raise AttributeError(f"user.{name} has to be a string or a list of strings.")
 
 
-def find_samples(sc, period: str, names: list[str]) -> Iterator[datasets.Dataset]:
-    for name in names:
-        sample_list = list(sc.find(period, name))
-        if not sample_list:
-            log.error("Sample %s not found.", name)
-        elif len(sample_list) > 1:
-            log.warning("Sample %s is not unique.", name)
-        for sample in sample_list:
-            yield sample
+def find_datasets(
+    dc: cache.DatasetCache, period: str, names: list[str]
+) -> Iterator[datasets.Dataset]:
+    if not names:
+        for dataset in dc.list(period):
+            yield dataset
+    else:
+        for name in names:
+            dataset_list = list(dc.find(period, name))
+            if not dataset_list:
+                log.error("Dataset %s not found.", name)
+            elif len(dataset_list) > 1:
+                log.warning("Dataset %s is not unique.", name)
+            for sample in dataset_list:
+                yield sample
 
 
 def load_histos(file_name: pathlib.Path) -> list[Any]:

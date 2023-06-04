@@ -9,6 +9,13 @@ samples_cache_path = "/groups/hephy/cms/${USER}/samples_cache"
 output = "/scratch-cbe/users/${USER}/output"
 local_url = "root://eos.grid.vbc.ac.at/"
 global_url = "root://xrootd-cms.infn.it/"
+workers = 4
+max_workers = 0
+batch_system = "SLURM"
+batch_cores = 2
+batch_memory = "4G"
+batch_walltime = "02:00:00"
+work_path = "/scratch-cbe/users/${USER}/workarea"
 
 [cache]
 voms_proxy_check = true

@@ -11,9 +11,12 @@ import importlib.resources
 from mrtools import config
 from mrtools import utils
 
-from mrtools.commands.list import list_samples
+from mrtools.commands.list import list_datasets
 from mrtools.commands.run import run
 from mrtools.commands.plot import plot
+from mrtools.commands.prun import prun
+from mrtools.commands.new import new
+from mrtools.commands.fix import fix
 
 # ROOT = utils.lazy_import("ROOT")
 
@@ -58,6 +61,9 @@ def main(config: pathlib.Path) -> None:
     cfg.load(config)
 
 
-main.add_command(list_samples)
+main.add_command(list_datasets)
 main.add_command(run)
 main.add_command(plot)
+main.add_command(prun)
+main.add_command(new)
+main.add_command(fix)

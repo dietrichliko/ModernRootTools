@@ -221,6 +221,7 @@ class Dataset:
         while p is not None:
             parts.insert(0, p.name)
             p = p.parent
+        parts.insert(0, "/")
         return parts
 
     def __str__(self) -> str:

@@ -60,7 +60,7 @@ cfg = config.get()
 @click.option(
     "--format", default=[], multiple=True, type=click.Choice(["png", "jpg", "pdf"])
 )
-def plot(
+def plot(   # noqa: C901
     user_file: pathlib.Path,
     period: list[str],
     sample_file: list[pathlib.Path],
@@ -109,7 +109,7 @@ def plot(
         log.info("Plotting period %s", p)
 
         if sample_name:
-            samples_iter = analysis.find_samples(sc, p, sample_name)
+            samples_iter = analysis.find_datasets(sc, p, sample_name)
         else:
             samples_iter = sc.list(p)
 

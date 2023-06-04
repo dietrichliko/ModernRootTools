@@ -104,6 +104,14 @@ class Configuration:
     xrdcp_retry: int = 0
     max_xrdcp: int = 0
     max_dasgoclient: int = 0
+    workers: int = 0
+    max_workers: int = 0
+    batch_system: str = ""
+    batch_cores: int = 0
+    batch_memory: str = ""
+    batch_walltime: str = ""
+    work_path = pathlib.Path()
+
     voms_proxy_check: bool = False
     voms_proxy_init: pathlib.Path = pathlib.Path()
     voms_proxy_info: pathlib.Path = pathlib.Path()
@@ -127,6 +135,13 @@ class Configuration:
         self.xrdcp_retry = _get_int(data, "site", "xrdcp_retry", 3)
         self.max_xrdcp = _get_int(data, "site", "max_xrdcp", 4)
         self.max_dasgoclient = _get_int(data, "site", "max_dasgoclient", 4)
+        self.worker = _get_int(data, "site", "workers", 4)
+        self.max_worker = _get_int(data, "site", "max_worker", 0)
+        self.batch_system = _get_str(data, "site", "batch_system")
+        self.batch_cores = _get_int(data, "site", "batch_cores", 2)
+        self.batch_memory = _get_str(data, "site", "batch_memory", "4G")
+        self.batch_walltime = _get_str(data, "site", "batch_walltime", "02:00:00")
+        self.work_path = _get_path(data, "site", "work_path", "")
 
         self.voms_proxy_check = _get_boolean(data, "cache", "voms_proxy_check", False)
         self.voms_proxy_path = _get_path(data, "cache", "voms_proxy_path", "")
